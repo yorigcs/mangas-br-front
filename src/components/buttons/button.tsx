@@ -1,11 +1,14 @@
+
+import React from 'react'
 import styled from 'styled-components'
 
 interface Props {
   message: string
+  onClick?: React.MouseEventHandler<HTMLButtonElement>
 }
-export const Button = ({ message }: Props): JSX.Element => {
+export const Button = ({ message, onClick }: Props): JSX.Element => {
   return (
-        <ButtonDefault>
+        <ButtonDefault onClick={onClick}>
             {message}
         </ButtonDefault>
   )
