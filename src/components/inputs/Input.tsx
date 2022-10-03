@@ -7,19 +7,28 @@ interface Props {
   type: React.HTMLInputTypeAttribute
   icon?: JSX.Element
   children?: React.ReactNode
+  onChange?: React.ChangeEventHandler<HTMLInputElement>
+  value?: string | number | readonly string[]
+  err?: string | null
 }
-export const Input = ({ placeHolder, name, type, icon }: Props): JSX.Element => {
+
+const handleFocus = (e: React.FocusEvent<HTMLInputElement>): void => {
+  e.target.readOnly = false
+}
+export const Input = ({ placeHolder, name, type, icon, onChange, value, err }: Props): JSX.Element => {
   if (icon) {
     return (
       <InputWrapper>
         <Icon>{icon}</Icon>
-        <InputIconLeft placeholder={placeHolder} name={name} type={type} />
+        <InputIconLeft placeholder={placeHolder} name={name} type={type} onChange={onChange} value={value} readOnly onFocus={handleFocus}/>
+        {err ? <InputError>{err}</InputError> : null}
       </InputWrapper>
     )
   }
   return (
     <InputWrapper>
-      <InputDefault placeholder={placeHolder} name={name} type={type} />
+      <InputDefault placeholder={placeHolder} name={name} type={type} onChange={onChange} value={value} readOnly onFocus={handleFocus}/>
+      {err ? <InputError>{err}</InputError> : null}
     </InputWrapper>
 
   )
@@ -29,6 +38,12 @@ const InputWrapper = styled.div`
   position: relative;
   width: 80%;
   
+`
+const InputError = styled.p`
+  color: ${props => props.theme.colors.desire};
+  margin-top: 4px;
+  font-weight: 700;
+  font-size: 14px;
 `
 
 const Icon = styled.div`
@@ -48,5 +63,4 @@ const InputDefault = styled.input`
 `
 const InputIconLeft = styled(InputDefault)`
   padding-left: 32px;
-  
 `
