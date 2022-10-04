@@ -21,7 +21,7 @@ interface signUpData {
   password: string
   passwordConfirmation: string
 }
-export const SignUp: React.FC = () => {
+export const SignUp = (): JSX.Element => {
   const navigate = useNavigate()
   const [userData, setUserData] = React.useState<signUpData>(
     {
@@ -31,6 +31,8 @@ export const SignUp: React.FC = () => {
       passwordConfirmation: ''
     }
   )
+
+  const [loading, setLoading] = React.useState(false)
 
   const [nameError, setNameError] = React.useState<string | null>(null)
   const [emailError, setEmailError] = React.useState<string | null>(null)
@@ -43,9 +45,11 @@ export const SignUp: React.FC = () => {
     e.preventDefault()
     const isFormValid = validateInputs(userData, { setNameError, setEmailError, setPasswordError, setPasswordConfirmationError })
     if (isFormValid) {
+      setLoading(true)
       singUpRequest(userData)
         .then(() => navigate('/sign-in'))
         .catch((err) => { setRequestError(err.response.data.error) })
+        .finally(() => setLoading(false))
     }
   }
 
@@ -54,11 +58,11 @@ export const SignUp: React.FC = () => {
       <Header />
       <Main>
         <Form title='Criar Conta' onSubmit={handleSubmit} err={requestError}>
-          <Input icon={<FaUserAlt />} placeHolder='Digite seu nome...' name='name' type='text' onChange={e => handleChange(e, setUserData)} value={userData.name} err={nameError}/>
-          <Input icon={<MdEmail />} placeHolder='Digite seu email...' name='email' type='email' onChange={e => handleChange(e, setUserData)} value={userData.email} err={emailError}/>
-          <Input icon={<RiLockPasswordFill />} placeHolder='Digite uma senha...' name='password' type='password' onChange={e => handleChange(e, setUserData)} value={userData.password} err={passwordError}/>
-          <Input icon={<RiLockPasswordFill />} placeHolder='Confirme sua senha...' name='passwordConfirmation' type='password' onChange={e => handleChange(e, setUserData)} value={userData.passwordConfirmation} err={passwordConfirmationError} />
-          <Button message='Cadastrar'/>
+          <Input icon={<FaUserAlt />} placeHolder='Digite seu nome...' name='name' type='text' onChange={e => handleChange(e, setUserData)} value={userData.name} err={nameError} loading={loading}/>
+          <Input icon={<MdEmail />} placeHolder='Digite seu email...' name='email' type='email' onChange={e => handleChange(e, setUserData)} value={userData.email} err={emailError} loading={loading}/>
+          <Input icon={<RiLockPasswordFill />} placeHolder='Digite uma senha...' name='password' type='password' onChange={e => handleChange(e, setUserData)} value={userData.password} err={passwordError} loading={loading}/>
+          <Input icon={<RiLockPasswordFill />} placeHolder='Confirme sua senha...' name='passwordConfirmation' type='password' onChange={e => handleChange(e, setUserData)} value={userData.passwordConfirmation} err={passwordConfirmationError} loading={loading}/>
+          <Button message='Cadastrar' loading={loading}/>
         </Form>
       </Main>
 
