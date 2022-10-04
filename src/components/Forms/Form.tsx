@@ -34,6 +34,9 @@ const FormWrapper = styled.form`
   min-height: 200px;
   background-color: ${props => props.theme.colors.spaceCadet};
   border-radius: 16px;
+  a {
+    color: ${props => (props.theme.colors.crystal)}
+  }
   @media only screen and (max-width: 480px) {
     width:100%;
   }
