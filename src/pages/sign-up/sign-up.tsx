@@ -6,7 +6,7 @@ import { Main } from '../../components/main/main'
 import { Footer } from '../../components/Footer/footer'
 
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import { FaUserAlt } from 'react-icons/fa'
 import { RiLockPasswordFill } from 'react-icons/ri'
 import { MdEmail } from 'react-icons/md'
@@ -63,6 +63,7 @@ export const SignUp = (): JSX.Element => {
           <Input icon={<RiLockPasswordFill />} placeHolder='Digite uma senha...' name='password' type='password' onChange={e => handleChange(e, setUserData)} value={userData.password} err={passwordError} loading={loading}/>
           <Input icon={<RiLockPasswordFill />} placeHolder='Confirme sua senha...' name='passwordConfirmation' type='password' onChange={e => handleChange(e, setUserData)} value={userData.passwordConfirmation} err={passwordConfirmationError} loading={loading}/>
           <Button message='Cadastrar' loading={loading}/>
+          <Link to='/sign-in'>Já possui uma conta? Entre aqui!</Link>
         </Form>
       </Main>
 
