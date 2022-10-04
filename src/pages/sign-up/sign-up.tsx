@@ -13,6 +13,7 @@ import { MdEmail } from 'react-icons/md'
 
 import { handleChange } from '../../helpers/'
 import { singUpRequest } from '../../services/requests'
+import { validateInputs } from './validateInputs'
 
 interface signUpData {
   name: string
@@ -38,43 +39,9 @@ export const SignUp: React.FC = () => {
 
   const [requestError, setRequestError] = React.useState<string | null>(null)
 
-  const inputValidation = (): boolean => {
-    let isValid = true
-    setNameError(null)
-    setEmailError(null)
-    setPasswordError(null)
-    setPasswordConfirmationError(null)
-    if (userData.name.length === 0) {
-      setNameError('Você deve fornecer um nome!')
-      isValid = false
-    }
-    const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
-    if (!emailRegex.test(userData.email)) {
-      setEmailError('Você deve fornecer um email válido!')
-      isValid = false
-    }
-
-    if (userData.password.length === 0) {
-      setPasswordError('Você deve fornecer uma senha!')
-      isValid = false
-    }
-
-    if (userData.passwordConfirmation.length === 0) {
-      setPasswordConfirmationError('Você deve confirmar sua senha  senha!')
-      isValid = false
-    }
-
-    if (userData.passwordConfirmation !== userData.password && userData.passwordConfirmation.length !== 0) {
-      setPasswordError('As senhas não combinam!')
-      setPasswordConfirmationError('As senhas não combinam!')
-      isValid = false
-    }
-    return isValid
-  }
-
   const handleSubmit = (e: React.FormEvent): void => {
     e.preventDefault()
-    const isFormValid = inputValidation()
+    const isFormValid = validateInputs(userData, { setNameError, setEmailError, setPasswordError, setPasswordConfirmationError })
     if (isFormValid) {
       singUpRequest(userData)
         .then(() => navigate('/sign-in'))
