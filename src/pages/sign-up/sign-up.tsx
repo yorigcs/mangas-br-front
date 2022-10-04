@@ -14,13 +14,8 @@ import { MdEmail } from 'react-icons/md'
 import { handleChange } from '../../helpers/'
 import { singUpRequest } from '../../services/requests'
 import { validateInputs } from './validateInputs'
+import { signUpData } from '../../models/sign-up-model'
 
-interface signUpData {
-  name: string
-  email: string
-  password: string
-  passwordConfirmation: string
-}
 export const SignUp = (): JSX.Element => {
   const navigate = useNavigate()
   const [userData, setUserData] = React.useState<signUpData>(
