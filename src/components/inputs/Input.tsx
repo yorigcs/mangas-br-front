@@ -10,24 +10,25 @@ interface Props {
   onChange?: React.ChangeEventHandler<HTMLInputElement>
   value?: string | number | readonly string[]
   err?: string | null
+  loading?: boolean
 }
 
 const handleFocus = (e: React.FocusEvent<HTMLInputElement>): void => {
   e.target.readOnly = false
 }
-export const Input = ({ placeHolder, name, type, icon, onChange, value, err }: Props): JSX.Element => {
+export const Input = ({ placeHolder, name, type, icon, onChange, value, err, loading }: Props): JSX.Element => {
   if (icon) {
     return (
       <InputWrapper>
         <Icon>{icon}</Icon>
-        <InputIconLeft error={err} placeholder={placeHolder} name={name} type={type} onChange={onChange} value={value} readOnly onFocus={handleFocus}/>
+        <InputIconLeft disabled={loading} loading={loading} error={err} placeholder={placeHolder} name={name} type={type} onChange={onChange} value={value} readOnly onFocus={handleFocus}/>
         {err ? <InputError>{err}</InputError> : null}
       </InputWrapper>
     )
   }
   return (
     <InputWrapper>
-      <InputDefault error={err} placeholder={placeHolder} name={name} type={type} onChange={onChange} value={value} readOnly onFocus={handleFocus}/>
+      <InputDefault disabled={loading} loading={loading} error={err} placeholder={placeHolder} name={name} type={type} onChange={onChange} value={value} readOnly onFocus={handleFocus}/>
       {err ? <InputError>{err}</InputError> : null}
     </InputWrapper>
 
@@ -51,11 +52,12 @@ const Icon = styled.div`
   left: 8px;
   top: 16px;
 `
-const InputDefault = styled.input<{ error?: string | null }>`
+const InputDefault = styled.input<{ error?: string | null, loading?: boolean }>`
+  cursor: ${props => (props.loading ? 'not-allowed' : 'text')};
   line-height: 32px;
   border-radius: 8px;
-  border: none;
   border: 2px solid ${props => (props.error ? props.theme.colors.desire : 'none')};
+  background-color: ${props => (props.loading ? props.theme.colors.crystal : 'white')};
   outline: none;
   padding: 8px;
   width: 100%;
