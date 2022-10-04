@@ -20,14 +20,14 @@ export const Input = ({ placeHolder, name, type, icon, onChange, value, err }: P
     return (
       <InputWrapper>
         <Icon>{icon}</Icon>
-        <InputIconLeft placeholder={placeHolder} name={name} type={type} onChange={onChange} value={value} readOnly onFocus={handleFocus}/>
+        <InputIconLeft error={err} placeholder={placeHolder} name={name} type={type} onChange={onChange} value={value} readOnly onFocus={handleFocus}/>
         {err ? <InputError>{err}</InputError> : null}
       </InputWrapper>
     )
   }
   return (
     <InputWrapper>
-      <InputDefault placeholder={placeHolder} name={name} type={type} onChange={onChange} value={value} readOnly onFocus={handleFocus}/>
+      <InputDefault error={err} placeholder={placeHolder} name={name} type={type} onChange={onChange} value={value} readOnly onFocus={handleFocus}/>
       {err ? <InputError>{err}</InputError> : null}
     </InputWrapper>
 
@@ -51,10 +51,11 @@ const Icon = styled.div`
   left: 8px;
   top: 16px;
 `
-const InputDefault = styled.input`
+const InputDefault = styled.input<{ error?: string | null }>`
   line-height: 32px;
   border-radius: 8px;
   border: none;
+  border: 2px solid ${props => (props.error ? props.theme.colors.desire : 'none')};
   outline: none;
   padding: 8px;
   width: 100%;
