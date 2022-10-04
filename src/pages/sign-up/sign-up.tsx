@@ -6,11 +6,13 @@ import { Main } from '../../components/main/main'
 import { Footer } from '../../components/Footer/footer'
 
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 import { FaUserAlt } from 'react-icons/fa'
 import { RiLockPasswordFill } from 'react-icons/ri'
 import { MdEmail } from 'react-icons/md'
 
-import { handleChange, handleClick } from '../../helpers/'
+import { handleChange } from '../../helpers/'
+import { singUpRequest } from '../../services/requests'
 
 interface signUpData {
   name: string
@@ -19,6 +21,7 @@ interface signUpData {
   passwordConfirmation: string
 }
 export const SignUp: React.FC = () => {
+  const navigate = useNavigate()
   const [userData, setUserData] = React.useState<signUpData>(
     {
       name: '',
@@ -32,6 +35,8 @@ export const SignUp: React.FC = () => {
   const [emailError, setEmailError] = React.useState<string | null>(null)
   const [passwordError, setPasswordError] = React.useState<string | null>(null)
   const [passwordConfirmationError, setPasswordConfirmationError] = React.useState<string | null>(null)
+
+  const [requestError, setRequestError] = React.useState<string | null>(null)
 
   const inputValidation = (): boolean => {
     let isValid = true
@@ -67,16 +72,26 @@ export const SignUp: React.FC = () => {
     return isValid
   }
 
+  const handleSubmit = (e: React.FormEvent): void => {
+    e.preventDefault()
+    const isFormValid = inputValidation()
+    if (isFormValid) {
+      singUpRequest(userData)
+        .then(() => navigate('/sign-in'))
+        .catch((err) => { setRequestError(err.response.data.error) })
+    }
+  }
+
   return (
     <>
       <Header />
       <Main>
-        <Form title='Criar Conta'>
+        <Form title='Criar Conta' onSubmit={handleSubmit} err={requestError}>
           <Input icon={<FaUserAlt />} placeHolder='Digite seu nome...' name='name' type='text' onChange={e => handleChange(e, setUserData)} value={userData.name} err={nameError}/>
           <Input icon={<MdEmail />} placeHolder='Digite seu email...' name='email' type='email' onChange={e => handleChange(e, setUserData)} value={userData.email} err={emailError}/>
           <Input icon={<RiLockPasswordFill />} placeHolder='Digite uma senha...' name='password' type='password' onChange={e => handleChange(e, setUserData)} value={userData.password} err={passwordError}/>
           <Input icon={<RiLockPasswordFill />} placeHolder='Confirme sua senha...' name='passwordConfirmation' type='password' onChange={e => handleChange(e, setUserData)} value={userData.passwordConfirmation} err={passwordConfirmationError} />
-          <Button message='Cadastrar' onClick={(e) => handleClick(e, inputValidation)} />
+          <Button message='Cadastrar'/>
         </Form>
       </Main>
 
