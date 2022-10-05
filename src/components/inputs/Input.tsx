@@ -21,14 +21,14 @@ export const Input = ({ placeHolder, name, type, icon, onChange, value, err, loa
     return (
       <InputWrapper>
         <Icon>{icon}</Icon>
-        <InputIconLeft disabled={loading} loading={loading} error={err} placeholder={placeHolder} name={name} type={type} onChange={onChange} value={value} readOnly onFocus={handleFocus}/>
+        <InputIconLeft disabled={loading} isLoading={loading} error={err} placeholder={placeHolder} name={name} type={type} onChange={onChange} value={value} readOnly onFocus={handleFocus}/>
         {err ? <InputError>{err}</InputError> : null}
       </InputWrapper>
     )
   }
   return (
     <InputWrapper>
-      <InputDefault disabled={loading} loading={loading} error={err} placeholder={placeHolder} name={name} type={type} onChange={onChange} value={value} readOnly onFocus={handleFocus}/>
+      <InputDefault disabled={loading} isLoading={loading} error={err} placeholder={placeHolder} name={name} type={type} onChange={onChange} value={value} readOnly onFocus={handleFocus}/>
       {err ? <InputError>{err}</InputError> : null}
     </InputWrapper>
 
@@ -50,14 +50,15 @@ const InputError = styled.p`
 const Icon = styled.div`
   position: absolute;
   left: 8px;
-  top: 16px;
+  top: 50%;
+  transform: translateY(-50%);
 `
-const InputDefault = styled.input<{ error?: string | null, loading?: boolean }>`
-  cursor: ${props => (props.loading ? 'not-allowed' : 'text')};
+const InputDefault = styled.input<{ error?: string | null, isLoading?: boolean }>`
+  cursor: ${props => (props.isLoading ? 'not-allowed' : 'text')};
   line-height: 32px;
   border-radius: 8px;
   border: 2px solid ${props => (props.error ? props.theme.colors.desire : 'none')};
-  background-color: ${props => (props.loading ? props.theme.colors.crystal : 'white')};
+  background-color: ${props => (props.isLoading ? props.theme.colors.crystal : 'white')};
   outline: none;
   padding: 8px;
   width: 100%;
