@@ -1,8 +1,9 @@
-import { RouterProvider } from 'react-router-dom'
-import router from './routes'
+import { BrowserRouter } from 'react-router-dom'
+import Routes from './routes'
 import { GlobalStyles } from './assets/styles/global'
 import { colors } from './assets/styles/colors'
 import { ThemeProvider } from 'styled-components'
+import { AuthProvider } from './contexts/auth'
 
 const theme = {
   colors
@@ -10,10 +11,12 @@ const theme = {
 const App = (): JSX.Element => {
   return (
     <ThemeProvider theme={theme}>
-      <>
+      <AuthProvider>
         <GlobalStyles />
-        <RouterProvider router={router} />
-      </>
+        <BrowserRouter>
+          <Routes />
+        </BrowserRouter>
+      </AuthProvider>
     </ThemeProvider>
 
   )
