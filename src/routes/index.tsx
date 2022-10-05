@@ -1,5 +1,10 @@
-import publicRouter from './publicRoutes'
+import { useAuth } from '../contexts/auth'
+import PublicRoutes from './publicRoutes'
+import UserRoutes from './userRoutes'
 
-const router = publicRouter
+const Routes = (): JSX.Element => {
+  const { signed } = useAuth()
+  return signed ? <UserRoutes /> : <PublicRoutes />
+}
 
-export default router
+export default Routes
