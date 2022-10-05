@@ -1,4 +1,4 @@
-import { signInData } from '../../models/sign-in-model'
+import { signInData } from '../../models/signInModel'
 
 interface SetError {
   setEmailError: React.Dispatch<React.SetStateAction<string | null>>

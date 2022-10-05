@@ -1,6 +1,6 @@
 import { useAuth } from '../contexts/auth'
-import PublicRoutes from './publicRoutes'
-import UserRoutes from './userRoutes'
+import PublicRoutes from './PublicRoutes'
+import UserRoutes from './UserRoutes'
 
 const Routes = (): JSX.Element => {
   const { signed } = useAuth()

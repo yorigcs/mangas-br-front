@@ -1,4 +1,4 @@
-import { signUpData } from '../../models/sign-up-model'
+import { signUpData } from '../../models/signUpModel'
 
 interface SetError {
   setNameError: React.Dispatch<React.SetStateAction<string | null>>

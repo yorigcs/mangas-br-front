@@ -1,7 +1,7 @@
 import api from './api'
-import { signUpData } from '../models/sign-up-model'
-import { signInData } from '../models/sign-in-model'
-import { User } from '../models/user-model'
+import { signUpData } from '../models/signUpModel'
+import { signInData } from '../models/signInModel'
+import { User } from '../models/userModel'
 export const singUpRequest = async (data: signUpData): Promise<any> => {
   return await api.post('sign-up', data)
 }

@@ -1,8 +1,8 @@
 
 import { Routes, Route, Navigate } from 'react-router-dom'
-import { Home } from '../pages/home/home'
-import { SignIn } from '../pages/sign-in/sign-in'
-import { SignUp } from '../pages/sign-up/sign-up'
+import { Home } from '../pages/home/Home'
+import { SignIn } from '../pages/sign-in/SignIn'
+import { SignUp } from '../pages/sign-up/SignUp'
 
 const PublicRoutes = (): JSX.Element => (
   <Routes>

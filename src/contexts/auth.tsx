@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/consistent-type-assertions */
 import React, { useContext, createContext, useState } from 'react'
-import { User } from '../models/user-model'
+import { User } from '../models/userModel'
 
 interface Props {
   children: React.ReactNode

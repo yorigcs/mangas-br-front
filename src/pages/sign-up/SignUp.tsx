@@ -1,9 +1,9 @@
-import { Header } from '../../components/header/header'
+import { Header } from '../../components/header/Header'
 import { Input } from '../../components/inputs/Input'
-import { Form } from '../../components/Forms/Form'
-import { Button } from '../../components/buttons/button'
-import { Main } from '../../components/main/main'
-import { Footer } from '../../components/Footer/footer'
+import { Form } from '../../components/forms/Form'
+import { Button } from '../../components/buttons/Button'
+import { Main } from '../../components/main/Main'
+import { Footer } from '../../components/footer/Footer'
 
 import React from 'react'
 import { useNavigate, Link } from 'react-router-dom'
@@ -11,10 +11,10 @@ import { FaUserAlt } from 'react-icons/fa'
 import { RiLockPasswordFill } from 'react-icons/ri'
 import { MdEmail } from 'react-icons/md'
 
-import { handleChange } from '../../helpers/'
+import { handleChange } from '../../helpers'
 import { singUpRequest } from '../../services/requests'
 import { validateInputs } from './validateInputs'
-import { signUpData } from '../../models/sign-up-model'
+import { signUpData } from '../../models/signUpModel'
 
 export const SignUp = (): JSX.Element => {
   const navigate = useNavigate()
