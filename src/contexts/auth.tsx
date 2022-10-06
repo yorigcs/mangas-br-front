@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/consistent-type-assertions */
-import React, { useContext, createContext, useState } from 'react'
+import React, { useContext, createContext, useState, useEffect } from 'react'
 import { User } from '../models/userModel'
 
 interface Props {
@@ -9,7 +9,7 @@ interface Props {
 interface AuthContextData {
   user: User | null
   signed: boolean
-  signIn: (user: User) => void
+  signIn: (user: User, token: string) => void
 }
 
 const AuthContext = createContext<AuthContextData>({} as AuthContextData)
@@ -17,7 +17,16 @@ const AuthContext = createContext<AuthContextData>({} as AuthContextData)
 export const AuthProvider = ({ children }: Props): JSX.Element => {
   const [user, setUser] = useState<User | null>(null)
 
-  const signIn = (user: User): void => {
+  useEffect(() => {
+    const storagedUser = localStorage.getItem('User')
+    if (storagedUser) {
+      setUser(JSON.parse(storagedUser))
+    }
+  }, [])
+
+  const signIn = (user: User, token: string): void => {
+    localStorage.setItem('User', JSON.stringify(user))
+    localStorage.setItem('Token', token)
     setUser(user)
   }
 
