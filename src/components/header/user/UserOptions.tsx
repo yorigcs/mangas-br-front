@@ -37,7 +37,7 @@ const UserOptionsWrapper = styled.div<{ isOpen?: boolean }>`
   gap: 8px;
   min-height: 100px;
   position: absolute;
-  bottom: -110px;
+  top: 46px;
   right: 0px;
   width: 200px;
   background-color: ${props => props.theme.colors.spaceCadet};
