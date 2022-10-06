@@ -1,28 +1,24 @@
-
-import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import { useAuth } from '../../../contexts/auth'
-import { ButtonForm } from '../../buttons/ButtonForm'
+
+import { AdminMenu } from './menu/menus/AdminMenu'
+import { UserMenu } from './menu/menus/UserMenu'
+import { VisitantMenu } from './menu/menus/VisitantMenu'
 
 interface Props {
   isOpen?: boolean
   onClick?: React.MouseEventHandler<HTMLDivElement>
 }
 export const UserOptions = ({ isOpen, onClick }: Props): JSX.Element => {
-  const navigate = useNavigate()
-  const { signed, user, signOut } = useAuth()
+  const { signed, user } = useAuth()
 
   const handleRender = (): JSX.Element => {
-    if (signed) {
-      return (
-        <>
-        <Welcome>Bem-Vindo, {user?.name.split(' ')[0]}.</Welcome>
-        <Risk />
-        <SignOutWrapper onClick={signOut}>Sair</SignOutWrapper>
-        </>
-      )
+    if (signed && user?.isAdmin) {
+      return <AdminMenu />
+    } else if (signed) {
+      return <UserMenu />
     } else {
-      return <ButtonForm onClick={() => navigate('/sign-in')} message='Fazer login' />
+      return <VisitantMenu/>
     }
   }
   return (
@@ -34,28 +30,6 @@ export const UserOptions = ({ isOpen, onClick }: Props): JSX.Element => {
     </>
   )
 }
-
-const Risk = styled.div`
-  width: 100%;
-  height: 1px;
-  background-color: ${props => props.theme.colors.jellyBeanBlue};
-  
-    
-`
-const Welcome = styled.span`
-  color: ${props => props.theme.colors.Honeydew};
-`
-
-const SignOutWrapper = styled.span`
-  position: absolute;
-  bottom: 16px;
-  cursor: pointer;
-  
-  color: ${props => props.theme.colors.desire};
-  &:hover {
-    opacity: 0.8;
-  }
-`
 
 const UserOptionsWrapper = styled.div<{ isOpen?: boolean }>`
   display: ${(props) => props.isOpen ? 'flex' : 'none'};
