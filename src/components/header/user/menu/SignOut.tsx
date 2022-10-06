@@ -11,10 +11,7 @@ export const SignOut = ({ children }: Props): JSX.Element => {
 }
 
 const SignOutWrapper = styled.span`
-  position: absolute;
-  bottom: 16px;
   cursor: pointer;
-  
   color: ${props => props.theme.colors.desire};
   &:hover {
     opacity: 0.8;
