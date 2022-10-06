@@ -1,7 +1,7 @@
 import { Header } from '../../components/header/Header'
 import { Input } from '../../components/inputs/Input'
 import { Form } from '../../components/forms/Form'
-import { Button } from '../../components/buttons/Button'
+import { ButtonForm } from '../../components/buttons/ButtonForm'
 import { Main } from '../../components/main/Main'
 import { Footer } from '../../components/footer/Footer'
 
@@ -57,7 +57,7 @@ export const SignUp = (): JSX.Element => {
           <Input icon={<MdEmail />} placeHolder='Digite seu email...' name='email' type='email' onChange={e => handleChange(e, setUserData)} value={userData.email} err={emailError} loading={loading}/>
           <Input icon={<RiLockPasswordFill />} placeHolder='Digite uma senha...' name='password' type='password' onChange={e => handleChange(e, setUserData)} value={userData.password} err={passwordError} loading={loading}/>
           <Input icon={<RiLockPasswordFill />} placeHolder='Confirme sua senha...' name='passwordConfirmation' type='password' onChange={e => handleChange(e, setUserData)} value={userData.passwordConfirmation} err={passwordConfirmationError} loading={loading}/>
-          <Button message='Cadastrar' loading={loading}/>
+          <ButtonForm message='Cadastrar' loading={loading}/>
           <Link to='/sign-in'>Já possui uma conta? Entre aqui!</Link>
         </Form>
       </Main>

@@ -7,7 +7,7 @@ interface Props {
   onClick?: React.MouseEventHandler<HTMLButtonElement>
   loading?: boolean
 }
-export const Button = ({ message, onClick, loading }: Props): JSX.Element => {
+export const ButtonForm = ({ message, onClick, loading }: Props): JSX.Element => {
   return (
         <ButtonDefault disabled={loading} isLoading={loading} onClick={onClick}>
             {message}
