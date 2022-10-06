@@ -10,12 +10,25 @@ interface Props {
 }
 export const UserOptions = ({ isOpen, onClick }: Props): JSX.Element => {
   const navigate = useNavigate()
-  const { signed, user } = useAuth()
+  const { signed, user, signOut } = useAuth()
+
+  const handleRender = (): JSX.Element => {
+    if (signed) {
+      return (
+        <>
+        <Welcome>Bem-Vindo, {user?.name.split(' ')[0]}.</Welcome>
+        <Risk />
+        <SignOutWrapper onClick={signOut}>Sair</SignOutWrapper>
+        </>
+      )
+    } else {
+      return <ButtonForm onClick={() => navigate('/sign-in')} message='Fazer login' />
+    }
+  }
   return (
     <>
       <UserOptionsWrapper isOpen={isOpen} >
-        {signed ? <Welcome>Bem-Vindo, {user?.name.split(' ')[0]}.</Welcome> : <ButtonForm onClick={() => navigate('/sign-in')} message='Fazer login' />}
-        <Risk />
+        {handleRender()}
       </UserOptionsWrapper>
       <Overlay onClick={onClick} isOpen={isOpen} />
     </>
@@ -31,6 +44,17 @@ const Risk = styled.div`
 `
 const Welcome = styled.span`
   color: ${props => props.theme.colors.Honeydew};
+`
+
+const SignOutWrapper = styled.span`
+  position: absolute;
+  bottom: 16px;
+  cursor: pointer;
+  
+  color: ${props => props.theme.colors.desire};
+  &:hover {
+    opacity: 0.8;
+  }
 `
 
 const UserOptionsWrapper = styled.div<{ isOpen?: boolean }>`

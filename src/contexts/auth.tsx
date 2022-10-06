@@ -10,6 +10,7 @@ interface AuthContextData {
   user: User | null
   signed: boolean
   signIn: (user: User, token: string) => void
+  signOut: () => void
 }
 
 const AuthContext = createContext<AuthContextData>({} as AuthContextData)
@@ -24,6 +25,12 @@ export const AuthProvider = ({ children }: Props): JSX.Element => {
     }
   }, [])
 
+  const signOut = (): void => {
+    localStorage.removeItem('User')
+    localStorage.removeItem('Token')
+    setUser(null)
+  }
+
   const signIn = (user: User, token: string): void => {
     localStorage.setItem('User', JSON.stringify(user))
     localStorage.setItem('Token', token)
@@ -31,7 +38,7 @@ export const AuthProvider = ({ children }: Props): JSX.Element => {
   }
 
   return (
-        <AuthContext.Provider value={{ signed: !!user, user, signIn }}>
+        <AuthContext.Provider value={{ signed: !!user, user, signIn, signOut }}>
             {children}
         </AuthContext.Provider>
   )
