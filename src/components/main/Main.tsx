@@ -12,7 +12,16 @@ export const Main = ({ children }: Props): JSX.Element => {
 }
 
 const MainWrapper = styled.main`
-  padding-top: 150px;
-  height: 100vh;
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+  gap: 20px;
+  padding: 150px 0 80px;
   background-color: ${props => props.theme.colors.jellyBeanBlue};
+  @media only screen and (max-width: 480px) {
+   width:100%;
+   flex-direction: column;
+   justify-content: flex-start;
+
+  }
 `

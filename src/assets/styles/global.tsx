@@ -31,7 +31,6 @@ display: block;
 }
 body {
 position: relative;
-background-color: #457B9D;
 line-height: 1;
 }
 ol, ul {
