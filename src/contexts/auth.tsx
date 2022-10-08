@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/consistent-type-assertions */
 import React, { useContext, createContext, useState, useEffect } from 'react'
 import { User } from '../models/userModel'
+import api from '../services/api'
 
 interface Props {
   children: React.ReactNode
@@ -20,8 +21,11 @@ export const AuthProvider = ({ children }: Props): JSX.Element => {
 
   useEffect(() => {
     const storagedUser = localStorage.getItem('User')
-    if (storagedUser) {
+    const storagedToken = localStorage.getItem('Token')
+    console.log(storagedToken)
+    if (storagedUser && storagedToken) {
       setUser(JSON.parse(storagedUser))
+      api.defaults.headers.common['x-acess-token'] = `Bearer ${storagedToken}`
     }
   }, [])
 
@@ -35,6 +39,7 @@ export const AuthProvider = ({ children }: Props): JSX.Element => {
     localStorage.setItem('User', JSON.stringify(user))
     localStorage.setItem('Token', token)
     setUser(user)
+    api.defaults.headers.common['x-acess-token'] = `Bearer ${token}`
   }
 
   return (
