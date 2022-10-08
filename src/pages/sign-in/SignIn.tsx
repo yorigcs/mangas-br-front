@@ -15,6 +15,7 @@ import { Link } from 'react-router-dom'
 import { MdEmail } from 'react-icons/md'
 import { RiLockPasswordFill } from 'react-icons/ri'
 import { useAuth } from '../../contexts/auth'
+import { ContentBlock } from '../../components/contents/ContentBlock'
 
 export const SignIn = (): JSX.Element => {
   const { signIn } = useAuth()
@@ -38,7 +39,7 @@ export const SignIn = (): JSX.Element => {
     if (isFormValid) {
       setLoading(true)
       singInRequest(userData)
-        .then((resp: SignInResponse) => { signIn(resp.data.user) })
+        .then((resp: SignInResponse) => { signIn(resp.data.user, resp.data.token) })
         .catch((err) => { setRequestError(err.response.data.error) })
         .finally(() => setLoading(false))
     }
@@ -48,12 +49,15 @@ export const SignIn = (): JSX.Element => {
     <>
       <Header />
       <Main>
-        <Form title='Fazer login' onSubmit={handleSubmit} err={requestError}>
-          <Input icon={<MdEmail />} placeHolder='Digite seu email...' name='email' type='email' onChange={e => handleChange(e, setUserData)} value={userData.email} err={emailError} loading={!!loading}/>
-          <Input icon={<RiLockPasswordFill />} placeHolder='Digite uma senha...' name='password' type='password' onChange={e => handleChange(e, setUserData)} value={userData.password} err={passwordError} loading={!!loading}/>
-          <ButtonForm message='Entrar' loading={!!loading}/>
-          <Link to='/sign-up'>Não possui uma conta? Cadastre-se!</Link>
-        </Form>
+        <ContentBlock title='Fazer login' size={{ width: '600px' }}>
+          <Form onSubmit={handleSubmit} msg={requestError}>
+            <Input icon={<MdEmail />} placeHolder='Digite seu email...' name='email' type='email' onChange={e => handleChange(e, setUserData)} value={userData.email} err={emailError} loading={!!loading} />
+            <Input icon={<RiLockPasswordFill />} placeHolder='Digite uma senha...' name='password' type='password' onChange={e => handleChange(e, setUserData)} value={userData.password} err={passwordError} loading={!!loading} />
+            <ButtonForm message='Entrar' loading={!!loading} />
+            <Link to='/sign-up'>Não possui uma conta? Cadastre-se!</Link>
+          </Form>
+        </ContentBlock>
+
       </Main>
 
       <Footer />

@@ -15,6 +15,7 @@ import { handleChange } from '../../helpers'
 import { singUpRequest } from '../../services/requests'
 import { validateInputs } from './validateInputs'
 import { signUpData } from '../../models/signUpModel'
+import { ContentBlock } from '../../components/contents/ContentBlock'
 
 export const SignUp = (): JSX.Element => {
   const navigate = useNavigate()
@@ -52,7 +53,8 @@ export const SignUp = (): JSX.Element => {
     <>
       <Header />
       <Main>
-        <Form title='Criar Conta' onSubmit={handleSubmit} err={requestError}>
+      <ContentBlock title='Fazer cadastro' size={{ width: '600px' }}>
+      <Form onSubmit={handleSubmit} msg={requestError}>
           <Input icon={<FaUserAlt />} placeHolder='Digite seu nome...' name='name' type='text' onChange={e => handleChange(e, setUserData)} value={userData.name} err={nameError} loading={loading}/>
           <Input icon={<MdEmail />} placeHolder='Digite seu email...' name='email' type='email' onChange={e => handleChange(e, setUserData)} value={userData.email} err={emailError} loading={loading}/>
           <Input icon={<RiLockPasswordFill />} placeHolder='Digite uma senha...' name='password' type='password' onChange={e => handleChange(e, setUserData)} value={userData.password} err={passwordError} loading={loading}/>
@@ -60,6 +62,8 @@ export const SignUp = (): JSX.Element => {
           <ButtonForm message='Cadastrar' loading={loading}/>
           <Link to='/sign-in'>Já possui uma conta? Entre aqui!</Link>
         </Form>
+      </ContentBlock>
+
       </Main>
 
       <Footer />
