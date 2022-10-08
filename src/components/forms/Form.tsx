@@ -2,47 +2,32 @@ import styled from 'styled-components'
 
 interface Props {
   children: React.ReactNode
-  title: string
   onSubmit?: React.FormEventHandler<HTMLFormElement>
-  err?: string | null
+  msg?: string | null
 }
-export const Form = ({ children, title, onSubmit, err }: Props): JSX.Element => {
+export const Form = ({ children, onSubmit, msg }: Props): JSX.Element => {
   return (
         <FormWrapper onSubmit={onSubmit}>
-            <Title>{title}</Title>
             {children}
-            {err ? <FormError>{err}</FormError> : null}
+            {msg ? <FormMsg>{msg}</FormMsg> : null}
         </FormWrapper>
   )
 }
 
-const FormError = styled.p`
+const FormMsg = styled.p`
   color: ${props => props.theme.colors.desire};
   margin-top: 4px;
   font-weight: 700;
   font-size: 14px;
 `
 const FormWrapper = styled.form`
-  
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 16px;
-  padding: 24px;
-  margin: 0 auto;
-  width: 600px;
-  min-height: 200px;
-  background-color: ${props => props.theme.colors.spaceCadet};
-  border-radius: 16px;
+  gap: 8px;
+  width: 100%;
   a {
     color: ${props => (props.theme.colors.crystal)}
   }
-  @media only screen and (max-width: 480px) {
-    width:100%;
-  }
-`
-const Title = styled.span`
-  font-weight: 700;
-  font-size: 32px;
-  color: ${props => props.theme.colors.Honeydew};
+ 
 `
