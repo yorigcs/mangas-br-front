@@ -23,6 +23,7 @@ const HeaderWrapper = styled.header`
   width:100%;
   height: 56px;
   background-color: ${props => props.theme.colors.spaceCadet};
+  z-index: 1;
 `
 
 const HeaderContentWrapper = styled.header`
