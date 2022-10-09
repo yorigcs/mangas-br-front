@@ -10,6 +10,7 @@ import { Genre } from '../../../components/genres/Genre'
 import { IGenre } from '../../../models/genreModels'
 import { Manga } from '../../../models/mangaModels'
 import { MangaInfo } from '../../../components/manga/MangaInfo'
+import { ButtonForm } from '../../../components/buttons/ButtonForm'
 
 export const AddGenresToManga = (): JSX.Element => {
   const [genres, setGenres] = React.useState<IGenre[] | null>(null)
@@ -66,7 +67,7 @@ export const AddGenresToManga = (): JSX.Element => {
   }
 
   return (
-    <ContentBlock title='Adicionar gêneros' size={{ height: 'auto' }} >
+    <ContentBlock gap='30px' title='Adicionar gêneros' size={{ height: 'auto' }} >
       <select name="mangas" onChange={(e) => loadMangaInfo(e)}>
         <option selected disabled>Selecione uma obra</option>
         {mangas?.map(manga => <option key={manga.id} value={manga.id}>{manga.name}</option>)}
@@ -88,7 +89,12 @@ export const AddGenresToManga = (): JSX.Element => {
           </GenresListWrapper>
           : null}
 
+        <ButtonField show={selectedGenres?.length !== 0}>
+          <ButtonForm message='Adicionar Categorias' />
+        </ButtonField>
+
       </GenresWrapper>
+
     </ContentBlock>
   )
 }
@@ -123,4 +129,11 @@ const GenresWrapper = styled.div`
 `
 const Title = styled.span`
   
+`
+
+const ButtonField = styled.div < { show: boolean }>`
+  display: ${props => props.show ? 'flex' : 'none'};
+  align-items: center;
+  justify-content: center;
+  width: 100%;
 `
