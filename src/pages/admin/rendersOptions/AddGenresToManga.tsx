@@ -5,16 +5,22 @@ import { ThreeCircles } from 'react-loader-spinner'
 
 import { ContentBlock } from '../../../components/contents/ContentBlock'
 
-import { loadAllGenres } from '../../../services/requests'
+import { loadAllGenres, loadAllMangas } from '../../../services/requests'
 import { Genre } from './Genre'
 import { IGenre } from '../../../models/genreModels'
+import { Manga } from '../../../models/mangaModels'
+import { MangaInfo } from '../../../components/manga/MangaInfo'
 
 export const AddGenresToManga = (): JSX.Element => {
   const [genres, setGenres] = React.useState<IGenre[] | null>(null)
 
+  const [mangas, setMangas] = React.useState<Manga[] | null>(null)
+  const [manga, setManga] = React.useState<Manga | undefined>(undefined)
+
   const [selectedGenres, setSelectedGenres] = React.useState<string[] | null>(null)
 
   const [loadingGenres, setLoadingGenres] = React.useState<boolean>(false)
+  const [loadingMangas, setLoadingMangas] = React.useState<boolean>(false)
 
   useEffect(() => {
     setLoadingGenres(true)
@@ -22,7 +28,19 @@ export const AddGenresToManga = (): JSX.Element => {
       .then((resp) => { setGenres(resp.data) })
       .catch((err) => { console.log(err.response.data.error) })
       .finally(() => setLoadingGenres(false))
+
+    setLoadingMangas(true)
+    loadAllMangas()
+      .then((resp) => { setMangas(resp.data) })
+      .catch((err) => { console.log(err.response.data.error) })
+      .finally(() => setLoadingMangas(false))
   }, [])
+
+  const loadMangaInfo = (e: React.ChangeEvent<HTMLSelectElement>): void => {
+    const mangaId = e.currentTarget.value
+    const manga = mangas?.filter(manga => manga.id === mangaId)?.[0]
+    setManga(manga)
+  }
 
   const addGenreOnClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>): void => {
     const genre = e.currentTarget.id
@@ -36,11 +54,11 @@ export const AddGenresToManga = (): JSX.Element => {
   }
 
   const handleRenderGenres = (): JSX.Element[] | JSX.Element | undefined => {
-    if (loadingGenres) {
+    if (loadingGenres || loadingMangas) {
       return <ThreeCircles height="50" width="50" color="#1D3557" wrapperStyle={{}} wrapperClass="" visible={true} ariaLabel="three-circles-rotating" />
     }
     return genres?.map(genre => {
-      if (!selectedGenres?.includes(genre.name)) {
+      if (!selectedGenres?.includes(genre.name) && !manga?.GenreManga.filter(gen => gen.genre.name === genre.name)?.[0] && manga) {
         return <Genre type='add' key={genre.id} id={genre.id} name={genre.name} onClick={(e) => addGenreOnClick(e)} />
       }
       return <></>
@@ -49,12 +67,19 @@ export const AddGenresToManga = (): JSX.Element => {
 
   return (
     <ContentBlock title='Adicionar gêneros' size={{ height: 'auto' }} >
+      <select name="mangas" onChange={(e) => loadMangaInfo(e)}>
+        <option selected disabled>Selecione uma obra</option>
+        {mangas?.map(manga => <option key={manga.id} value={manga.id}>{manga.name}</option>)}
+      </select>
+      {manga ? <MangaInfo {...manga} /> : null}
       <GenresWrapper >
 
-        <GenresListWrapper>
-          <Title>Selecione um dos gêneros disponíveis:</Title>
-          {handleRenderGenres()}
-        </GenresListWrapper>
+        {manga
+          ? <GenresListWrapper>
+            <Title>Selecione um dos gêneros disponíveis:</Title>
+            {handleRenderGenres()}
+          </GenresListWrapper>
+          : null}
 
         {(selectedGenres && selectedGenres?.length !== 0)
           ? <GenresListWrapper>
@@ -85,6 +110,10 @@ const GenresListWrapper = styled.div`
   -ms-overflow-style: none;  /* IE 10+ */
   &::-webkit-scrollbar {
     width: 0;
+  }
+  > span {
+    width: 100%;
+    text-align: center;
   }
 `
 const GenresWrapper = styled.div`
