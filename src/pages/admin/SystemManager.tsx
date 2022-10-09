@@ -66,7 +66,7 @@ const PrimaryContent = styled.div`
   
 `
 const SecundaryContent = styled.div`
-  width: 400px;
+  width: 600px;
   @media only screen and (max-width: 480px) {
    width:100%;
   }
