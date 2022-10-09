@@ -6,20 +6,22 @@ interface Props {
   title: string
   style?: React.CSSProperties
   size?: Size
+  gap?: string
 }
 
 interface Size {
   width?: string
   height?: string
 }
-export const ContentBlock = ({ children, title, size }: Props): JSX.Element => {
+
+export const ContentBlock = ({ children, title, size, gap }: Props): JSX.Element => {
   return (
       <ContentWrapper height={size?.height} width={size?.width}>
         <Title>
           {title}
         </Title>
         <Risk />
-        <MainContent >
+        <MainContent gap={gap}>
           {children}
         </MainContent>
 
@@ -55,7 +57,9 @@ const Title = styled.h2`
     width: 100%;
   `
 
-const MainContent = styled.div`
+const MainContent = styled.div<{ gap?: string }>`
     padding: 10px 0;
-  
+    display: flex;
+    flex-direction: column;
+    gap: ${props => props.gap ?? '0'};
   `
