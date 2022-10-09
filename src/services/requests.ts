@@ -26,3 +26,7 @@ export const createNewMangaRequest = async (data: newMangaData): Promise<any> =>
 export const loadAllGenres = async (): Promise<any> => {
   return await api.get('get-all-genres')
 }
+
+export const loadAllMangas = async (): Promise<any> => {
+  return await api.get('all-mangas')
+}
