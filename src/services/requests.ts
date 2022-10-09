@@ -3,6 +3,7 @@ import { signUpData } from '../models/signUpModel'
 import { signInData } from '../models/signInModel'
 import { User } from '../models/userModel'
 import { newMangaData } from '../models/mangaModels'
+import { Genre } from '../models/genreModels'
 
 export interface SignInResponse {
   data: {
@@ -29,4 +30,8 @@ export const loadAllGenres = async (): Promise<any> => {
 
 export const loadAllMangas = async (): Promise<any> => {
   return await api.get('all-mangas')
+}
+
+export const addGenresToManga = async (data: Genre): Promise<any> => {
+  return await api.post('add-genre-to-manga', data)
 }

@@ -5,7 +5,7 @@ import { ThreeCircles } from 'react-loader-spinner'
 
 import { ContentBlock } from '../../../components/contents/ContentBlock'
 
-import { loadAllGenres, loadAllMangas } from '../../../services/requests'
+import { addGenresToManga, loadAllGenres, loadAllMangas } from '../../../services/requests'
 import { Genre } from '../../../components/genres/Genre'
 import { IGenre } from '../../../models/genreModels'
 import { Manga } from '../../../models/mangaModels'
@@ -22,6 +22,7 @@ export const AddGenresToManga = (): JSX.Element => {
 
   const [loadingGenres, setLoadingGenres] = React.useState<boolean>(false)
   const [loadingMangas, setLoadingMangas] = React.useState<boolean>(false)
+  const [loadingSubmit, setLoadingSubmit] = React.useState<boolean>(false)
 
   useEffect(() => {
     setLoadingGenres(true)
@@ -40,6 +41,7 @@ export const AddGenresToManga = (): JSX.Element => {
   const loadMangaInfo = (e: React.ChangeEvent<HTMLSelectElement>): void => {
     const mangaId = e.currentTarget.value
     const manga = mangas?.filter(manga => manga.id === mangaId)?.[0]
+    setSelectedGenres(null)
     setManga(manga)
   }
 
@@ -66,6 +68,16 @@ export const AddGenresToManga = (): JSX.Element => {
     })
   }
 
+  const onSubmit = (): void => {
+    setLoadingSubmit(true)
+    addGenresToManga({ mangaId: manga?.id, genres: selectedGenres })
+      .then((resp) => {
+        console.log(resp)
+      })
+      .catch((err) => { console.log(err.response.data.error) })
+      .finally(() => setLoadingSubmit(false))
+  }
+
   return (
     <ContentBlock gap='30px' title='Adicionar gêneros' size={{ height: 'auto' }} >
       <select name="mangas" onChange={(e) => loadMangaInfo(e)}>
@@ -89,8 +101,8 @@ export const AddGenresToManga = (): JSX.Element => {
           </GenresListWrapper>
           : null}
 
-        <ButtonField show={selectedGenres?.length !== 0}>
-          <ButtonForm message='Adicionar Categorias' />
+        <ButtonField show={!!selectedGenres && selectedGenres?.length !== 0}>
+          <ButtonForm message='Adicionar Categorias' onClick={onSubmit} loading={loadingSubmit} />
         </ButtonField>
 
       </GenresWrapper>
