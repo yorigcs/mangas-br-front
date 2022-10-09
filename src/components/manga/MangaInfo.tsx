@@ -125,6 +125,7 @@ const InfoExtraWrapper = styled.div`
 
 const GenresWrapper = styled.div`
   display: flex;
+  flex-wrap: wrap;
   gap: 8px;
   height: 100px;
   overflow-y: scroll;
