@@ -22,3 +22,7 @@ export const singInRequest = async (data: signInData): Promise<any> => {
 export const createNewMangaRequest = async (data: newMangaData): Promise<any> => {
   return await api.post('create-manga', data)
 }
+
+export const loadAllGenres = async (): Promise<any> => {
+  return await api.get('get-all-genres')
+}
