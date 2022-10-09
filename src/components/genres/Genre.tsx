@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { IoMdAddCircle, IoMdRemoveCircle } from 'react-icons/io'
-import { GenreClick } from '../../../models/genreModels'
+import { GenreClick } from '../../models/genreModels'
 
 export const Genre = ({ id, name, onClick, type }: GenreClick): JSX.Element => {
   const handleRenderGenre = (): JSX.Element => {

@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { Manga } from '../../models/mangaModels'
-import { Genre } from '../../pages/admin/rendersOptions/Genre'
+import { Genre } from '../genres/Genre'
 import { convertToDateDDMMYYYY } from '../../utils/dateFormater'
 
 export const MangaInfo = (mangaInfo: Manga): JSX.Element => {

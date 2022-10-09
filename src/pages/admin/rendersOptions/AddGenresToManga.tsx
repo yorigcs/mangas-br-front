@@ -6,7 +6,7 @@ import { ThreeCircles } from 'react-loader-spinner'
 import { ContentBlock } from '../../../components/contents/ContentBlock'
 
 import { loadAllGenres, loadAllMangas } from '../../../services/requests'
-import { Genre } from './Genre'
+import { Genre } from '../../../components/genres/Genre'
 import { IGenre } from '../../../models/genreModels'
 import { Manga } from '../../../models/mangaModels'
 import { MangaInfo } from '../../../components/manga/MangaInfo'
