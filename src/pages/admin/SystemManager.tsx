@@ -7,6 +7,7 @@ import { ContentBlock } from '../../components/contents/ContentBlock'
 import { MenuItem } from '../../components/header/user/menu/MenuItem'
 import { useState } from 'react'
 import { CreateNewManga } from './rendersOptions/CreateNewManga'
+import { AddGenresToManga } from './rendersOptions/AddGenresToManga'
 
 export const SystemManger = (): JSX.Element => {
   const [openOption, setOpenOption] = useState<string | null>(null)
@@ -15,6 +16,8 @@ export const SystemManger = (): JSX.Element => {
     switch (openOption) {
       case 'createNewManga':
         return <CreateNewManga />
+      case 'addGenresToManga':
+        return <AddGenresToManga />
       default:
         return <></>
     }
@@ -27,6 +30,7 @@ export const SystemManger = (): JSX.Element => {
           <ContentBlock title='Painel de administração' size={{ height: '300px' }} >
             <MenuList>
               <MenuItem onClick={() => setOpenOption('createNewManga')}>Criar nova obra</MenuItem>
+              <MenuItem onClick={() => setOpenOption('addGenresToManga')}>Add gêneros na obra</MenuItem>
             </MenuList>
 
           </ContentBlock>
