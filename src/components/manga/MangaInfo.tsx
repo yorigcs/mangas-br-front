@@ -4,32 +4,64 @@ import { Genre } from '../genres/Genre'
 import { convertToDateDDMMYYYY } from '../../utils/dateFormater'
 
 export const MangaInfo = (mangaInfo: Manga): JSX.Element => {
+  const handleGenreRender = (): JSX.Element => {
+    if (mangaInfo.GenreManga.length === 0) {
+      return (
+        <GenresMessage>A obra ainda não possui nenhum gênero</GenresMessage>
+      )
+    }
+    return (
+      <>
+        <GenresMessage>Gêneros</GenresMessage>
+        <GenresWrapper>
+          {mangaInfo.GenreManga.map(gen => <Genre key={gen.genre_id} name={gen.genre.name} />)}
+        </GenresWrapper>
+      </>
+
+    )
+  }
+
   return (
     <MangaInfoWrapper>
 
-        <MangaInfoLeftSideWrapper>
-          <img id={mangaInfo.id} src={mangaInfo.cover_picture}></img>
-          <div>add favoritos</div>
-          <div>seguidores: {mangaInfo.followed_by}</div>
-          <div>status: {mangaInfo.status}</div>
-        </MangaInfoLeftSideWrapper>
+      <MangaInfoLeftSideWrapper>
+        <ImageCover id={mangaInfo.id} src={mangaInfo.cover_picture}></ImageCover>
+        <div>adicionar aos favoritos</div>
+        <div>seguidores: {mangaInfo.followed_by}</div>
+        <div>status: {handleStatus(mangaInfo.status)}</div>
+      </MangaInfoLeftSideWrapper>
 
-        <MangaInfoRightSideWrapper>
-          <TitleWrapper>{mangaInfo.name}</TitleWrapper>
-          <DescriptionWrapper><span>Descrição:</span> {mangaInfo.description}</DescriptionWrapper>
-          <InfoExtraWrapper>
-            <InfoMessageWrapper><span>Autor</span> {mangaInfo.author}</InfoMessageWrapper>
-            <InfoMessageWrapper><span>Postado por</span> {mangaInfo.posted_by}</InfoMessageWrapper>
-            <InfoMessageWrapper><span>Postado em</span> {convertToDateDDMMYYYY(mangaInfo.created_at)}</InfoMessageWrapper>
-            <InfoMessageWrapper><span>Atualizado em</span> {convertToDateDDMMYYYY(mangaInfo.updated_at)}</InfoMessageWrapper>
-          </InfoExtraWrapper>
-          <GenresWrapper>
-            {mangaInfo.GenreManga.map(gen => <Genre key={gen.genre_id} name={gen.genre.name}/>)}
-          </GenresWrapper>
-        </MangaInfoRightSideWrapper>
-      </MangaInfoWrapper>
+      <MangaInfoRightSideWrapper>
+        <TitleWrapper>{mangaInfo.name}</TitleWrapper>
+        <DescriptionWrapper><span>Descrição:</span> {mangaInfo.description}</DescriptionWrapper>
+        <InfoExtraWrapper>
+          <InfoMessageWrapper><span>Autor</span> {mangaInfo.author}</InfoMessageWrapper>
+          <InfoMessageWrapper><span>Postado por</span> {mangaInfo.posted_by}</InfoMessageWrapper>
+          <InfoMessageWrapper><span>Postado em</span> {convertToDateDDMMYYYY(mangaInfo.created_at)}</InfoMessageWrapper>
+          <InfoMessageWrapper><span>Atualizado em</span> {convertToDateDDMMYYYY(mangaInfo.updated_at)}</InfoMessageWrapper>
+        </InfoExtraWrapper>
+        {handleGenreRender()}
+
+      </MangaInfoRightSideWrapper>
+    </MangaInfoWrapper>
   )
 }
+
+const handleStatus = (status: string): string => {
+  switch (status) {
+    case 'paused':
+      return 'Em pausa'
+    case 'dropped':
+      return 'dropped'
+    default:
+      return 'Em lançamento'
+  }
+}
+
+const ImageCover = styled.img`
+  width: 180px;
+  height: 260px;
+`
 const MangaInfoWrapper = styled.div`
   padding: 8px;
   display: flex;
@@ -51,7 +83,6 @@ const MangaInfoRightSideWrapper = styled.div`
   gap: 16px;
 
 `
-
 const DescriptionWrapper = styled.span`
   margin-bottom:24px;
   color: ${props => props.theme.colors.crystal};
@@ -67,8 +98,8 @@ const DescriptionWrapper = styled.span`
     font-weight: 700;
   }
 `
-
 const InfoMessageWrapper = styled.span`
+
   margin-bottom:24px;
   color: ${props => props.theme.colors.crystal};
   width: 50%;
@@ -94,5 +125,16 @@ const InfoExtraWrapper = styled.div`
 
 const GenresWrapper = styled.div`
   display: flex;
-
+  gap: 8px;
+  height: 100px;
+  overflow-y: scroll;
+  -ms-overflow-style: none;  /* IE 10+ */
+  &::-webkit-scrollbar {
+    width: 0;
+  }
+`
+const GenresMessage = styled.div`
+ color: ${props => props.theme.colors.Honeydew};
+  font-weight: 700;
+  font-size: 18px;
 `
