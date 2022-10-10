@@ -29,11 +29,11 @@ const ChapterWrapper = styled.div`
 `
 
 const Title = styled.h2`
-  width:100%;
+  width:fit-content;
   color: ${props => props.theme.colors.crystal}
 `
 const Time = styled.span`
-  width:100%;
+  width:fit-content;
   font-size: 12px;
   color: ${props => props.theme.colors.crystal}
 `
