@@ -3,6 +3,7 @@ import { ContentBlock } from '../../components/contents/ContentBlock'
 import { Footer } from '../../components/footer/Footer'
 import { Header } from '../../components/header/Header'
 import { Main } from '../../components/main/Main'
+import { LastUpdates } from './lastUpdates/LastUpdates'
 
 export const Home = (): JSX.Element => {
   return (
@@ -14,8 +15,8 @@ export const Home = (): JSX.Element => {
             oi
           </ContentBlock>
 
-          <ContentBlock title='Bloco 2' size={{ height: '1500px' }} >
-            oi
+          <ContentBlock title='Últimos updates' size={{ height: '1500px' }} >
+            <LastUpdates />
           </ContentBlock>
 
           <ContentBlock title='Bloco 2' size={{ height: '300px' }} >
