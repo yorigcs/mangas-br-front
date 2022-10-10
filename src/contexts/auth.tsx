@@ -22,7 +22,6 @@ export const AuthProvider = ({ children }: Props): JSX.Element => {
   useEffect(() => {
     const storagedUser = localStorage.getItem('User')
     const storagedToken = localStorage.getItem('Token')
-    console.log(storagedToken)
     if (storagedUser && storagedToken) {
       setUser(JSON.parse(storagedUser))
       api.defaults.headers.common['x-acess-token'] = `Bearer ${storagedToken}`
