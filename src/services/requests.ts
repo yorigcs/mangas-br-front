@@ -35,3 +35,7 @@ export const loadAllMangas = async (): Promise<any> => {
 export const addGenresToManga = async (data: Genre): Promise<any> => {
   return await api.post('add-genre-to-manga', data)
 }
+
+export const loadMangasWithChapter = async (): Promise<any> => {
+  return await api.get('mangas-with-chapters')
+}
