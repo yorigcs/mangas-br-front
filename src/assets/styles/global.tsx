@@ -4,6 +4,27 @@ export const GlobalStyles = createGlobalStyle`
 * {
 box-sizing: border-box;
 font-family: 'Roboto', sans-serif;
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #A8DADC;
+  border-radius: 8px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background-color: #E63946;
+  border-radius: 8px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background-color: #e43140;
+  
+}
 }
     html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
