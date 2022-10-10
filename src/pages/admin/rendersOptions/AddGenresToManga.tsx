@@ -124,11 +124,6 @@ const GenresListWrapper = styled.div`
   width: 100%;
   max-height: 200px;
   background-color:${props => props.theme.colors.jellyBeanBlue};
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none;  /* IE 10+ */
-  &::-webkit-scrollbar {
-    width: 0;
-  }
   > span {
     width: 100%;
     text-align: center;

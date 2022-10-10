@@ -17,11 +17,22 @@ const MainWrapper = styled.main`
   min-height: 100vh;
   gap: 20px;
   padding: 150px 0 80px;
-  background-color: ${props => props.theme.colors.jellyBeanBlue};
+  background-color: ${props => props.theme.colors.lapisLazuli};
   @media only screen and (max-width: 480px) {
    width:100%;
    flex-direction: column;
    justify-content: flex-start;
 
+  }
+  @media only screen and (max-width: 480px) {
+   width:100%;
+   flex-direction: column;
+   justify-content: flex-start;
+  }
+
+  @media only screen and (max-width: 768px) {
+   width:100%;
+   flex-direction: column;
+   justify-content: flex-start;
   }
 `

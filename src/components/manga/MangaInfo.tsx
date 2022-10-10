@@ -69,7 +69,16 @@ const MangaInfoWrapper = styled.div`
   width: fit-content;
   height: fit-content;
   border-radius: 8px;
-  background-color: red;
+  background-color: ${props => props.theme.colors.jellyBeanBlue};
+  @media only screen and (max-width: 480px) {
+    flex-direction: column;
+    align-items: center;
+
+  }
+  @media only screen and (max-width: 768px) {
+    flex-direction: column;
+    align-items: center;
+  }
   `
 
 const MangaInfoLeftSideWrapper = styled.div`
@@ -88,10 +97,6 @@ const DescriptionWrapper = styled.span`
   color: ${props => props.theme.colors.crystal};
   max-height: 200px;
   overflow-y: scroll;
-  -ms-overflow-style: none;  /* IE 10+ */
-  &::-webkit-scrollbar {
-    width: 0;
-  }
   display: block;
   > span {
     color: ${props => props.theme.colors.Honeydew};
@@ -127,12 +132,8 @@ const GenresWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  height: 100px;
+  height: 60px;
   overflow-y: scroll;
-  -ms-overflow-style: none;  /* IE 10+ */
-  &::-webkit-scrollbar {
-    width: 0;
-  }
 `
 const GenresMessage = styled.div`
  color: ${props => props.theme.colors.Honeydew};
