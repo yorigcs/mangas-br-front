@@ -2,11 +2,13 @@ import { MangaWithChapter } from '../../models/mangaModels'
 import { ChapterRenderPreview } from '../chapters/ChapterRenderPreview'
 
 import styled from 'styled-components'
+import { useNavigate } from 'react-router-dom'
 
 export const MangaWithChapterPreview = (props: MangaWithChapter): JSX.Element => {
+  const navigate = useNavigate()
   return (
           <MangaWithChapterContentWrapper>
-              <Image id={props.id} src={props.cover_picture} alt={props.name} />
+              <Image id={props.id} onClick={e => navigate(`mangas/${e.currentTarget.id}`, { state: { ...props } })} src={props.cover_picture} alt={props.name} />
               <Infos>
                   <Title>{props.name}</Title>
                   <ChaptersWrapper>
