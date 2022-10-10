@@ -11,16 +11,9 @@ export const Home = (): JSX.Element => {
       <Header />
       <Main>
         <PrimaryContent>
-          <ContentBlock title='Bloco 1' size={{ height: '300px' }} >
-            oi
-          </ContentBlock>
 
           <ContentBlock title='Últimos updates' size={{ height: '1500px' }} >
             <LastUpdates />
-          </ContentBlock>
-
-          <ContentBlock title='Bloco 2' size={{ height: '300px' }} >
-            oi
           </ContentBlock>
 
         </PrimaryContent>
