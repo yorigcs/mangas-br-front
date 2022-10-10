@@ -13,7 +13,7 @@ export const UserOptions = ({ isOpen, onClick }: Props): JSX.Element => {
   const { signed, user } = useAuth()
 
   const handleRender = (): JSX.Element => {
-    if (signed && user?.isAdmin) {
+    if (signed && user?.role === 'admin') {
       return <AdminMenu />
     } else if (signed) {
       return <UserMenu />

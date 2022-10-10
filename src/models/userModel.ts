@@ -1,8 +1,9 @@
 export interface User {
   email: string
   id: string
-  isAdmin: boolean
-  isModerator: boolean
+  role: Roles
   name: string
   profilePicture: string | null
 }
+
+type Roles = 'admin' | 'user' | 'moderator'
