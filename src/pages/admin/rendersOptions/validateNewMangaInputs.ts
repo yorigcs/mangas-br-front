@@ -13,9 +13,8 @@ export const validateNewMangaInputs = (mangaData: newMangaData, setError: SetErr
   setError.setDescriptionError(null)
   setError.setAuthorError(null)
 
-  const linkImageRegex = /(http)?s?:?(\/\/[^"']*\.(?:png|jpg|jpeg|gif|png|svg))/
-  if (!linkImageRegex.test(mangaData.coverPicture)) {
-    setError.setCoverPictureError('Você deve fornecer um link válido!')
+  if (mangaData.coverPicture.length === 0) {
+    setError.setCoverPictureError('Você deve fornecer um arquivo válido!')
     isValid = false
   }
 

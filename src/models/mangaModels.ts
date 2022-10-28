@@ -1,6 +1,7 @@
+
 export interface newMangaData {
   name: string
-  coverPicture: string
+  coverPicture: any
   description: string
   author: string
 
