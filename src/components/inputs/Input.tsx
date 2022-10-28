@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 interface Props {
-  placeHolder: string
+  placeHolder?: string
   name: string
   type: React.HTMLInputTypeAttribute
   icon?: JSX.Element
@@ -11,24 +11,22 @@ interface Props {
   value?: string | number | readonly string[]
   err?: string | null
   loading?: boolean
+  multiple?: boolean
 }
 
-const handleFocus = (e: React.FocusEvent<HTMLInputElement>): void => {
-  e.target.readOnly = false
-}
-export const Input = ({ placeHolder, name, type, icon, onChange, value, err, loading }: Props): JSX.Element => {
+export const Input = ({ placeHolder, name, type, icon, onChange, value, err, loading, multiple }: Props): JSX.Element => {
   if (icon) {
     return (
       <InputWrapper>
         <Icon>{icon}</Icon>
-        <InputIconLeft disabled={loading} isLoading={loading} error={err} placeholder={placeHolder} name={name} type={type} onChange={onChange} value={value} readOnly onFocus={handleFocus}/>
+        <InputIconLeft disabled={loading} isLoading={loading} error={err} placeholder={placeHolder} name={name} type={type} onChange={onChange} value={value} multiple={multiple}/>
         {err ? <InputError>{err}</InputError> : null}
       </InputWrapper>
     )
   }
   return (
     <InputWrapper>
-      <InputDefault disabled={loading} isLoading={loading} error={err} placeholder={placeHolder} name={name} type={type} onChange={onChange} value={value} readOnly onFocus={handleFocus}/>
+      <InputDefault disabled={loading} isLoading={loading} error={err} placeholder={placeHolder} name={name} type={type} onChange={onChange} value={value} multiple={multiple}/>
       {err ? <InputError>{err}</InputError> : null}
     </InputWrapper>
 
