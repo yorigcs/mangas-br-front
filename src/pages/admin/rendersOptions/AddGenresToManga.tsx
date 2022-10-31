@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 
 import { ThreeCircles } from 'react-loader-spinner'
@@ -11,38 +11,23 @@ import { IGenre } from '../../../models/genreModels'
 import { Manga } from '../../../models/mangaModels'
 import { MangaInfo } from '../../../components/manga/MangaInfo'
 import { ButtonForm } from '../../../components/buttons/ButtonForm'
+import { useAsync } from '../../../hooks/useAsync'
 
 export const AddGenresToManga = (): JSX.Element => {
-  const [genres, setGenres] = React.useState<IGenre[] | null>(null)
+  const { data: genres, status: statusGenres } = useAsync<IGenre[] | null>(loadAllGenres)
+  const { data: mangas, status: statusMangas, act: reloadMangas } = useAsync<Manga[] | null>(loadAllMangas)
 
-  const [mangas, setMangas] = React.useState<Manga[] | null>(null)
   const [manga, setManga] = React.useState<Manga | undefined>(undefined)
 
   const [selectedGenres, setSelectedGenres] = React.useState<string[] | null>(null)
 
-  const [loadingGenres, setLoadingGenres] = React.useState<boolean>(false)
-  const [loadingMangas, setLoadingMangas] = React.useState<boolean>(false)
   const [loadingSubmit, setLoadingSubmit] = React.useState<boolean>(false)
-
-  useEffect(() => {
-    setLoadingGenres(true)
-    loadAllGenres()
-      .then((resp) => { setGenres(resp.data) })
-      .catch((err) => { console.log(err.response.data.error) })
-      .finally(() => setLoadingGenres(false))
-
-    setLoadingMangas(true)
-    loadAllMangas()
-      .then((resp) => { setMangas(resp.data) })
-      .catch((err) => { console.log(err.response.data.error) })
-      .finally(() => setLoadingMangas(false))
-  }, [])
 
   const loadMangaInfo = (e: React.ChangeEvent<HTMLSelectElement>): void => {
     const mangaId = e.currentTarget.value
     const manga = mangas?.filter(manga => manga.id === mangaId)?.[0]
-    setSelectedGenres(null)
-    setManga(manga)
+    setSelectedGenres(genres => (genres = null))
+    setManga(mang => (mang = manga))
   }
 
   const addGenreOnClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>): void => {
@@ -57,7 +42,7 @@ export const AddGenresToManga = (): JSX.Element => {
   }
 
   const handleRenderGenres = (): JSX.Element[] | JSX.Element | undefined => {
-    if (loadingGenres || loadingMangas) {
+    if (statusGenres === 'loading' || statusMangas === 'loading') {
       return <ThreeCircles height="50" width="50" color="#1D3557" wrapperStyle={{}} wrapperClass="" visible={true} ariaLabel="three-circles-rotating" />
     }
     return genres?.map(genre => {
@@ -68,6 +53,12 @@ export const AddGenresToManga = (): JSX.Element => {
     })
   }
 
+  const reloadContent = (): void => {
+    setSelectedGenres(genres => (genres = null))
+    setManga(mang => (mang = undefined))
+    void reloadMangas()
+  }
+
   const onSubmit = (): void => {
     setLoadingSubmit(true)
     addGenresToManga({ mangaId: manga?.id, genres: selectedGenres })
@@ -75,16 +66,16 @@ export const AddGenresToManga = (): JSX.Element => {
         console.log(resp)
       })
       .catch((err) => { console.log(err.response.data.error) })
-      .finally(() => setLoadingSubmit(false))
+      .finally(() => { setLoadingSubmit(false); reloadContent() })
   }
 
   return (
     <ContentBlock gap='30px' title='Adicionar gêneros' size={{ height: 'auto' }} >
-      <select name="mangas" onChange={(e) => loadMangaInfo(e)}>
+      <select name="mangas" defaultValue={'Selecione uma obra'} onChange={(e) => loadMangaInfo(e)}>
         <option selected disabled>Selecione uma obra</option>
         {mangas?.map(manga => <option key={manga.id} value={manga.id}>{manga.name}</option>)}
       </select>
-      {manga ? <MangaInfo {...manga} /> : null}
+      {manga ? <MangaInfo key={manga.id} {...manga} /> : null}
       <GenresWrapper >
 
         {manga
