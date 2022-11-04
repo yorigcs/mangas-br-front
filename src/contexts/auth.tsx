@@ -1,20 +1,21 @@
 /* eslint-disable @typescript-eslint/consistent-type-assertions */
-import React, { useContext, createContext, useState, useEffect } from 'react'
+import React, { createContext, useState, useEffect } from 'react'
 import { User } from '../models/userModel'
 import api from '../services/api'
+import { SignInResponse } from '../services/requests'
 
 interface Props {
   children: React.ReactNode
 }
 
-interface AuthContextData {
+export interface AuthContextData {
   user: User | null
   signed: boolean
-  signIn: (user: User, token: string) => void
+  signIn: (dataInfo: SignInResponse) => void
   signOut: () => void
 }
 
-const AuthContext = createContext<AuthContextData>({} as AuthContextData)
+export const AuthContext = createContext<AuthContextData>({} as AuthContextData)
 
 export const AuthProvider = ({ children }: Props): JSX.Element => {
   const [user, setUser] = useState<User | null>(null)
@@ -34,11 +35,11 @@ export const AuthProvider = ({ children }: Props): JSX.Element => {
     setUser(null)
   }
 
-  const signIn = (user: User, token: string): void => {
-    localStorage.setItem('User', JSON.stringify(user))
-    localStorage.setItem('Token', token)
-    setUser(user)
-    api.defaults.headers.common['x-acess-token'] = `Bearer ${token}`
+  const signIn = (dataInfo: SignInResponse): void => {
+    localStorage.setItem('User', JSON.stringify(dataInfo.user))
+    localStorage.setItem('Token', dataInfo.token)
+    setUser(dataInfo.user)
+    api.defaults.headers.common['x-acess-token'] = `Bearer ${dataInfo.token}`
   }
 
   return (
@@ -46,9 +47,4 @@ export const AuthProvider = ({ children }: Props): JSX.Element => {
             {children}
         </AuthContext.Provider>
   )
-}
-
-export const useAuth = (): AuthContextData => {
-  const context = useContext(AuthContext)
-  return context
 }
