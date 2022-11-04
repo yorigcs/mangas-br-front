@@ -18,7 +18,7 @@ export const useAsync = <T>(handler: any, immediate: boolean = true):
       const res = await handler(...args)
       setData(data => (data = res.data))
       setStatus(status => (status = 'sucess'))
-      return data
+      return res.data
     } catch (err: any) {
       setErrMsg(error => (error = err.response.data.error))
       setStatus(status => (status = 'error'))
