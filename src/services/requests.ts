@@ -5,10 +5,8 @@ import { User } from '../models/userModel'
 import { Genre } from '../models/genreModels'
 
 export interface SignInResponse {
-  data: {
-    user: User
-    token: string
-  }
+  user: User
+  token: string
 }
 
 export const singUpRequest = async (data: signUpData): Promise<any> => {
