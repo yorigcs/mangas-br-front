@@ -1,4 +1,4 @@
-import { useAuth } from '../contexts/auth'
+import { useAuth } from '../hooks/useAuth'
 import PublicRoutes from './PublicRoutes'
 import UserRoutes from './UserRoutes'
 import AdminRoutes from './AdminRoutes'

@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { useAuth } from '../../../contexts/auth'
+import { useAuth } from '../../../hooks/useAuth'
 
 import { AdminMenu } from './menu/menus/AdminMenu'
 import { UserMenu } from './menu/menus/UserMenu'

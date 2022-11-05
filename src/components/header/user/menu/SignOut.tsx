@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { useAuth } from '../../../../contexts/auth'
+import { useAuth } from '../../../../hooks/useAuth'
 
 interface Props {
   children?: React.ReactNode

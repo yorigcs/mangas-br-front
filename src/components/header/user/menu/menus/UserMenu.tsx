@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { useAuth } from '../../../../../contexts/auth'
+import { useAuth } from '../../../../../hooks/useAuth'
 import { SignOut } from '../SignOut'
 import { Welcome } from '../Welcome'
 
