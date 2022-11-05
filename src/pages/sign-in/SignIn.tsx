@@ -4,6 +4,7 @@ import { Footer } from '../../components/footer/Footer'
 import { Form } from '../../components/forms/Form'
 import { Input } from '../../components/inputs/Input'
 import { ButtonForm } from '../../components/buttons/ButtonForm'
+import { ContentBlock } from '../../components/contents/ContentBlock'
 
 import { signInData } from '../../models/signInModel'
 import { singInRequest, SignInResponse } from '../../services/requests'
@@ -14,11 +15,12 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { MdEmail } from 'react-icons/md'
 import { RiLockPasswordFill } from 'react-icons/ri'
-import { useAuth } from '../../contexts/auth'
-import { ContentBlock } from '../../components/contents/ContentBlock'
+import { useAuth } from '../../hooks/useAuth'
+import { useAsync } from '../../hooks/useAsync'
 
 export const SignIn = (): JSX.Element => {
   const { signIn } = useAuth()
+  const { status, act: signInExec, errMsg } = useAsync<SignInResponse>(async () => await singInRequest(userData), false)
   const [userData, setUserData] = React.useState<signInData>(
     {
       email: '',
@@ -26,22 +28,16 @@ export const SignIn = (): JSX.Element => {
     }
   )
 
-  const [loading, setLoading] = React.useState<boolean>(false)
-
   const [emailError, setEmailError] = React.useState<string | null>(null)
   const [passwordError, setPasswordError] = React.useState<string | null>(null)
-
-  const [requestError, setRequestError] = React.useState<string | null>(null)
 
   const handleSubmit = (e: React.FormEvent): void => {
     e.preventDefault()
     const isFormValid = validateInputs(userData, { setEmailError, setPasswordError })
     if (isFormValid) {
-      setLoading(true)
-      singInRequest(userData)
-        .then((resp: SignInResponse) => { signIn(resp.data.user, resp.data.token) })
-        .catch((err) => { setRequestError(err.response.data.error) })
-        .finally(() => setLoading(false))
+      signInExec(userData)
+        .then((resp) => { if (resp && !(resp instanceof Error)) signIn(resp) })
+        .catch((err) => { console.log(err) })
     }
   }
 
@@ -50,16 +46,14 @@ export const SignIn = (): JSX.Element => {
       <Header />
       <Main>
         <ContentBlock title='Fazer login' size={{ width: '600px' }}>
-          <Form onSubmit={handleSubmit} msg={requestError}>
-            <Input icon={<MdEmail />} placeHolder='Digite seu email...' name='email' type='email' onChange={e => handleChange(e, setUserData)} value={userData.email} err={emailError} loading={!!loading} />
-            <Input icon={<RiLockPasswordFill />} placeHolder='Digite uma senha...' name='password' type='password' onChange={e => handleChange(e, setUserData)} value={userData.password} err={passwordError} loading={!!loading} />
-            <ButtonForm message='Entrar' loading={!!loading} />
+          <Form onSubmit={handleSubmit} status={status} msg={errMsg}>
+            <Input icon={<MdEmail />} placeHolder='Digite seu email...' name='email' type='email' onChange={e => handleChange(e, setUserData)} value={userData.email} err={emailError} loading={status === 'loading'} />
+            <Input icon={<RiLockPasswordFill />} placeHolder='Digite uma senha...' name='password' type='password' onChange={e => handleChange(e, setUserData)} value={userData.password} err={passwordError} loading={status === 'loading'} />
+            <ButtonForm message='Entrar' status={status} />
             <Link to='/sign-up'>Não possui uma conta? Cadastre-se!</Link>
           </Form>
         </ContentBlock>
-
       </Main>
-
       <Footer />
     </>
   )
