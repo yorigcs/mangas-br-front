@@ -7,11 +7,19 @@ export const useAsync = <T>(handler: any, immediate: boolean = true):
   status: Status
   errMsg: string | null
   act: (...args: any) => Promise<Error | T | null>
+  resetStates: (time: number) => void
 } => {
   const [data, setData] = useState<T | null>(null)
   const [errMsg, setErrMsg] = useState<null | string>(null)
   const [status, setStatus] = useState<'loading' | 'sucess' | 'error' | null>(null)
 
+  const resetStates = (time: number): void => {
+    setTimeout(() => {
+      setStatus(status => (status = null))
+      setErrMsg(error => (error = null))
+      setData(data => (data = null))
+    }, time)
+  }
   const act = async (...args: any): Promise<T | Error | null> => {
     try {
       setStatus(status => (status = 'loading'))
@@ -36,6 +44,7 @@ export const useAsync = <T>(handler: any, immediate: boolean = true):
     data,
     status,
     errMsg,
-    act
+    act,
+    resetStates
   }
 }
