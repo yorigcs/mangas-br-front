@@ -12,6 +12,7 @@ import { Manga } from '../../../models/mangaModels'
 import { MangaInfo } from '../../../components/manga/MangaInfo'
 import { ButtonForm } from '../../../components/buttons/ButtonForm'
 import { useAsync } from '../../../hooks/useAsync'
+import { Select } from '../../../components/select/Select'
 
 export const AddGenresToManga = (): JSX.Element => {
   const { data: genres, status: statusGenres } = useAsync<IGenre[] | null>(loadAllGenres)
@@ -21,10 +22,8 @@ export const AddGenresToManga = (): JSX.Element => {
 
   const [selectedGenres, setSelectedGenres] = React.useState<string[] | null>(null)
 
-  const [loadingSubmit, setLoadingSubmit] = React.useState<boolean>(false)
-
-  const loadMangaInfo = (e: React.ChangeEvent<HTMLSelectElement>): void => {
-    const mangaId = e.currentTarget.value
+  const loadMangaInfo = (e: React.MouseEvent<HTMLElement>): void => {
+    const mangaId = e.currentTarget.id
     const manga = mangas?.filter(manga => manga.id === mangaId)?.[0]
     setSelectedGenres(genres => (genres = null))
     setManga(mang => (mang = manga))
@@ -60,21 +59,17 @@ export const AddGenresToManga = (): JSX.Element => {
   }
 
   const onSubmit = (): void => {
-    setLoadingSubmit(true)
     addGenresToManga({ mangaId: manga?.id, genres: selectedGenres })
       .then((resp) => {
         console.log(resp)
       })
       .catch((err) => { console.log(err.response.data.error) })
-      .finally(() => { setLoadingSubmit(false); reloadContent() })
+      .finally(() => { reloadContent() })
   }
 
   return (
     <ContentBlock gap='30px' title='Adicionar gêneros' size={{ height: 'auto' }} >
-      <select name="mangas" defaultValue={'Selecione uma obra'} onChange={(e) => loadMangaInfo(e)}>
-        <option selected disabled>Selecione uma obra</option>
-        {mangas?.map(manga => <option key={manga.id} value={manga.id}>{manga.name}</option>)}
-      </select>
+      <Select defaultTitle='Selecione um manga' onSelect={loadMangaInfo} list={mangas?.map(manga => ({ name: manga?.name, id: manga?.id }))}/>
       {manga ? <MangaInfo key={manga.id} {...manga} /> : null}
       <GenresWrapper >
 
@@ -93,7 +88,8 @@ export const AddGenresToManga = (): JSX.Element => {
           : null}
 
         <ButtonField show={!!selectedGenres && selectedGenres?.length !== 0}>
-          <ButtonForm message='Adicionar Categorias' onClick={onSubmit} loading={loadingSubmit} />
+          {/* TODO status update */}
+          <ButtonForm message='Adicionar Categorias' onClick={onSubmit} status='loading' />
         </ButtonField>
 
       </GenresWrapper>
