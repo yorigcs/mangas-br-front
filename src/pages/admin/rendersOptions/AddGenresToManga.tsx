@@ -17,9 +17,9 @@ import { Select } from '../../../components/select/Select'
 export const AddGenresToManga = (): JSX.Element => {
   const { data: genres, status: statusGenres } = useAsync<IGenre[] | null>(loadAllGenres)
   const { data: mangas, status: statusMangas, act: reloadMangas } = useAsync<Manga[] | null>(loadAllMangas)
+  const { status: statusAddGenres, act: addGenresExec, errMsg, resetStates: resetRequestResponse } = useAsync<string>(addGenresToManga, false)
 
   const [manga, setManga] = React.useState<Manga | undefined>(undefined)
-
   const [selectedGenres, setSelectedGenres] = React.useState<string[] | null>(null)
 
   const loadMangaInfo = (e: React.MouseEvent<HTMLElement>): void => {
@@ -52,19 +52,16 @@ export const AddGenresToManga = (): JSX.Element => {
     })
   }
 
-  const reloadContent = (): void => {
-    setSelectedGenres(genres => (genres = null))
-    setManga(mang => (mang = undefined))
-    void reloadMangas()
-  }
-
   const onSubmit = (): void => {
-    addGenresToManga({ mangaId: manga?.id, genres: selectedGenres })
-      .then((resp) => {
-        console.log(resp)
+    addGenresExec({ mangaId: manga?.id, genres: selectedGenres })
+      .then(() => {
+        setTimeout(() => {
+          setSelectedGenres(genres => (genres = null))
+          setManga(mang => (mang = undefined))
+          reloadMangas().then(() => {}).catch(() => {})
+        }, 2000)
       })
-      .catch((err) => { console.log(err.response.data.error) })
-      .finally(() => { reloadContent() })
+      .catch(() => { resetRequestResponse() })
   }
 
   return (
@@ -88,8 +85,7 @@ export const AddGenresToManga = (): JSX.Element => {
           : null}
 
         <ButtonField show={!!selectedGenres && selectedGenres?.length !== 0}>
-          {/* TODO status update */}
-          <ButtonForm message='Adicionar Categorias' onClick={onSubmit} status='loading' />
+          <ButtonForm message='Adicionar Categorias' onClick={onSubmit} status={statusAddGenres} errMsg={errMsg} />
         </ButtonField>
 
       </GenresWrapper>
@@ -127,6 +123,8 @@ const Title = styled.span`
 
 const ButtonField = styled.div < { show: boolean }>`
   display: ${props => props.show ? 'flex' : 'none'};
+  gap: 8px;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   width: 100%;
