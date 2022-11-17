@@ -21,7 +21,7 @@ import { useAsync } from '../../hooks/useAsync'
 
 export const SignUp = (): JSX.Element => {
   const navigate = useNavigate()
-  const { data: signUpMsg, status, act: signUpExec, errMsg } = useAsync<string>(async () => await singUpRequest(userData), false)
+  const { status, act: signUpExec, errMsg, resetStates } = useAsync<string>(singUpRequest, false)
   const [userData, setUserData] = React.useState<signUpData>(
     {
       name: '',
@@ -39,11 +39,11 @@ export const SignUp = (): JSX.Element => {
   const handleSubmit = (e: React.FormEvent): void => {
     e.preventDefault()
     const isFormValid = validateInputs(userData, { setNameError, setEmailError, setPasswordError, setPasswordConfirmationError })
-    if (isFormValid) {
-      signUpExec(userData)
-        .then(() => { setTimeout(() => { navigate('/sign-in') }, 3000) })
-        .catch((err) => { console.log(err) })
-    }
+    if (!isFormValid) return
+
+    signUpExec(userData)
+      .then(() => { setTimeout(() => { navigate('/sign-in') }, 3000) })
+      .catch(() => { resetStates() })
   }
 
   return (
@@ -51,12 +51,12 @@ export const SignUp = (): JSX.Element => {
       <Header />
       <Main>
       <ContentBlock title='Fazer cadastro' size={{ width: '600px' }}>
-        <Form onSubmit={handleSubmit} status={status} msg={signUpMsg ?? errMsg}>
+        <Form onSubmit={handleSubmit}>
           <Input icon={<FaUserAlt />} placeHolder='Digite seu nome...' name='name' type='text' onChange={e => handleChange(e, setUserData)} value={userData.name} err={nameError} loading={status === 'loading'}/>
           <Input icon={<MdEmail />} placeHolder='Digite seu email...' name='email' type='email' onChange={e => handleChange(e, setUserData)} value={userData.email} err={emailError} loading={status === 'loading'}/>
           <Input icon={<RiLockPasswordFill />} placeHolder='Digite uma senha...' name='password' type='password' onChange={e => handleChange(e, setUserData)} value={userData.password} err={passwordError} loading={status === 'loading'}/>
           <Input icon={<RiLockPasswordFill />} placeHolder='Confirme sua senha...' name='passwordConfirmation' type='password' onChange={e => handleChange(e, setUserData)} value={userData.passwordConfirmation} err={passwordConfirmationError} loading={status === 'loading'}/>
-          <ButtonForm message='Cadastrar' status={status}/>
+          <ButtonForm message='Cadastrar' status={status} errMsg={errMsg}/>
           <Link to='/sign-in'>Já possui uma conta? Entre aqui!</Link>
         </Form>
       </ContentBlock>
