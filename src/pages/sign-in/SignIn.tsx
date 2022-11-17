@@ -20,7 +20,7 @@ import { useAsync } from '../../hooks/useAsync'
 
 export const SignIn = (): JSX.Element => {
   const { signIn } = useAuth()
-  const { status, act: signInExec, errMsg } = useAsync<SignInResponse>(async () => await singInRequest(userData), false)
+  const { status, act: signInExec, errMsg, resetStates } = useAsync<SignInResponse>(singInRequest, false)
   const [userData, setUserData] = React.useState<signInData>(
     {
       email: '',
@@ -34,11 +34,14 @@ export const SignIn = (): JSX.Element => {
   const handleSubmit = (e: React.FormEvent): void => {
     e.preventDefault()
     const isFormValid = validateInputs(userData, { setEmailError, setPasswordError })
-    if (isFormValid) {
-      signInExec(userData)
-        .then((resp) => { if (resp && !(resp instanceof Error)) signIn(resp) })
-        .catch((err) => { console.log(err) })
-    }
+    if (!isFormValid) return
+
+    signInExec(userData)
+      .then((resp) => {
+        if (!resp || (resp instanceof Error)) return
+        setTimeout(() => { signIn(resp) }, 1500)
+      })
+      .catch(() => { resetStates() })
   }
 
   return (
@@ -46,10 +49,10 @@ export const SignIn = (): JSX.Element => {
       <Header />
       <Main>
         <ContentBlock title='Fazer login' size={{ width: '600px' }}>
-          <Form onSubmit={handleSubmit} status={status} msg={errMsg}>
+          <Form onSubmit={handleSubmit} status={status}>
             <Input icon={<MdEmail />} placeHolder='Digite seu email...' name='email' type='email' onChange={e => handleChange(e, setUserData)} value={userData.email} err={emailError} loading={status === 'loading'} />
             <Input icon={<RiLockPasswordFill />} placeHolder='Digite uma senha...' name='password' type='password' onChange={e => handleChange(e, setUserData)} value={userData.password} err={passwordError} loading={status === 'loading'} />
-            <ButtonForm message='Entrar' status={status} />
+            <ButtonForm message='Entrar' status={status} errMsg={errMsg} />
             <Link to='/sign-up'>Não possui uma conta? Cadastre-se!</Link>
           </Form>
         </ContentBlock>
