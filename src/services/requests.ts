@@ -3,6 +3,7 @@ import { signUpData } from '../models/signUpModel'
 import { signInData } from '../models/signInModel'
 import { User } from '../models/userModel'
 import { Genre } from '../models/genreModels'
+import { NewChapter } from '../models/chapterModel'
 
 export interface SignInResponse {
   user: User
@@ -19,6 +20,10 @@ export const singInRequest = async (data: signInData): Promise<any> => {
 
 export const createNewMangaRequest = async (data: FormData): Promise<any> => {
   return await api.post('create-manga', data, { headers: { 'Content-Type': 'multipart/form-data' } })
+}
+
+export const createNewChapterRequest = async (data: NewChapter): Promise<any> => {
+  return await api.post('create-chapter', data)
 }
 
 export const loadAllGenres = async (): Promise<any> => {
