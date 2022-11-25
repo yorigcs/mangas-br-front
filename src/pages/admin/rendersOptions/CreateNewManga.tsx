@@ -14,8 +14,7 @@ import { createNewMangaRequest } from '../../../services/requests'
 import { validateNewMangaInputs } from './validateNewMangaInputs'
 
 export const CreateNewManga = (): JSX.Element => {
-  const formData = new FormData()
-  const { data: dataMsg, act: createMangaExec, errMsg, status, resetStates } = useAsync<string>(async () => await createNewMangaRequest(formData), false)
+  const { act: createMangaExec, errMsg, status, resetStates } = useAsync<string>(createNewMangaRequest, false)
   const [mangaData, setMangaData] = React.useState<newMangaData>(
     {
       name: '',
@@ -36,26 +35,25 @@ export const CreateNewManga = (): JSX.Element => {
     const isFormValid = validateNewMangaInputs(mangaData, { setNameError, setCoverPictureError, setDescriptionError, setAuthorError })
     if (!isFormValid) return
 
-    for (const file of mangaData.coverPicture) {
-      formData.append('images', file)
-    }
+    const formData = new FormData()
+    for (const file of mangaData.coverPicture) formData.append('images', file)
     formData.append('name', mangaData.name)
     formData.append('description', mangaData.description)
     formData.append('author', mangaData.author)
 
     createMangaExec(formData)
-      .then()
-      .catch((err) => { console.log(err.message) })
-      .finally(() => { resetStates(2000) })
+      .then(() => { setTimeout(() => { window.location.reload() }, 2000) })
+      .catch(() => {})
+      .finally(() => { resetStates() })
   }
   return (
     <ContentBlock title='Criar novo manga' size={{ height: 'auto' }} >
-      <Form onSubmit={handleSubmit} status={status} msg={dataMsg ?? errMsg}>
+      <Form onSubmit={handleSubmit}>
         <Input icon={<BsChatSquareTextFill />} placeHolder='Digite o nome da obra...' name='name' type='text' onChange={e => handleChange(e, setMangaData)} value={mangaData.name} err={nameError} loading={status === 'loading'} />
         <Input icon={<AiFillFileImage />} name='coverPicture' type='file' onChange={e => handleChangeFile(e, setMangaData)} err={coverPictureError} loading={status === 'loading'} />
         <Input icon={<BsChatSquareTextFill />} placeHolder='Digite uma descrição...' name='description' type='text' onChange={e => handleChange(e, setMangaData)} value={mangaData.description} err={descriptionError} loading={status === 'loading'} />
         <Input icon={<FaUser />} placeHolder='Digite o nome do autor' name='author' type='text' onChange={e => handleChange(e, setMangaData)} value={mangaData.author} err={authorError} loading={status === 'loading'} />
-        <ButtonForm status={status} message='Criar Manga' />
+        <ButtonForm status={status} message='Criar Manga' errMsg={errMsg} />
       </Form>
     </ContentBlock>
   )
