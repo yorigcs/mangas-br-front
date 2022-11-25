@@ -8,6 +8,7 @@ import { MenuItem } from '../../components/header/user/menu/MenuItem'
 import { useState } from 'react'
 import { CreateNewManga } from './rendersOptions/CreateNewManga'
 import { AddGenresToManga } from './rendersOptions/AddGenresToManga'
+import { CreateNewChapter } from './rendersOptions/CreateNewChapter'
 
 export const SystemManger = (): JSX.Element => {
   const [openOption, setOpenOption] = useState<string | null>(null)
@@ -18,6 +19,8 @@ export const SystemManger = (): JSX.Element => {
         return <CreateNewManga />
       case 'addGenresToManga':
         return <AddGenresToManga />
+      case 'createChapter':
+        return <CreateNewChapter />
       default:
         return <></>
     }
@@ -31,6 +34,7 @@ export const SystemManger = (): JSX.Element => {
             <MenuList>
               <MenuItem onClick={() => setOpenOption('createNewManga')}>Criar nova obra</MenuItem>
               <MenuItem onClick={() => setOpenOption('addGenresToManga')}>Add gêneros na obra</MenuItem>
+              <MenuItem onClick={() => setOpenOption('createChapter')}>Criar capítulo</MenuItem>
             </MenuList>
 
           </ContentBlock>
