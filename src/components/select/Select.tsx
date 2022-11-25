@@ -75,7 +75,8 @@ const List = styled.ul`
     padding: 8px;
     max-height: 200px;
     overflow-y: scroll;
-    border:  1px solid ${props => (props.theme.colors.Honeydew)};;
+    border:  1px solid ${props => (props.theme.colors.Honeydew)};
+    z-index: 1;
     
 `
 
