@@ -1,20 +1,13 @@
-import { useEffect, useState } from 'react'
+import styled from 'styled-components'
+
 import { MangaWithChapter } from '../../../models/mangaModels'
 import { loadMangasWithChapter } from '../../../services/requests'
-import styled from 'styled-components'
 import { MangaWithChapterPreview } from '../../../components/manga/MangaWithChapterPreview'
+import { useAsync } from '../../../hooks/useAsync'
 
 export const LastUpdates = (): JSX.Element => {
-  const [mangas, setMangas] = useState<MangaWithChapter[] | null>(null)
+  const { data: mangas } = useAsync<MangaWithChapter[]>(loadMangasWithChapter)
 
-  useEffect(() => {
-    loadMangasWithChapter()
-      .then(resp => {
-        setMangas(resp.data)
-        console.log(resp)
-      })
-      .catch(err => console.log(err.response.data.error))
-  }, [])
   return (
         <LastUpdatesContent>
             {mangas?.map(manga => <MangaWithChapterPreview key={manga.id} {...manga} />)}
@@ -23,9 +16,8 @@ export const LastUpdates = (): JSX.Element => {
 }
 
 const LastUpdatesContent = styled.div`
-    width: 100%;
   display: grid;
-  grid-template-columns: auto auto;
+  grid-template-columns: repeat(2,minmax(0, 1fr));
   gap: 20px;
  
   @media only screen and (max-width: 480px) {
