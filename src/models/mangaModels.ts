@@ -48,7 +48,6 @@ export interface Chapter {
   name: string
   chapter_num: number
   manga_id: string
-  season: number
   created_at: string
   updated_at: string
 }
