@@ -66,7 +66,7 @@ const MangaInfoWrapper = styled.div`
   padding: 8px;
   display: flex;
   gap: 16px;
-  width: fit-content;
+  width: 100%;
   height: fit-content;
   border-radius: 8px;
   background-color: ${props => props.theme.colors.jellyBeanBlue};
