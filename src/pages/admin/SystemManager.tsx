@@ -30,7 +30,7 @@ export const SystemManger = (): JSX.Element => {
       <Header />
       <Main>
         <PrimaryContent>
-          <ContentBlock title='Painel de administração' size={{ height: '300px' }} >
+          <ContentBlock title='Painel de administração' size={{ height: 'fit-content' }} >
             <MenuList>
               <MenuItem onClick={() => setOpenOption('createNewManga')}>Criar nova obra</MenuItem>
               <MenuItem onClick={() => setOpenOption('addGenresToManga')}>Add gêneros na obra</MenuItem>
