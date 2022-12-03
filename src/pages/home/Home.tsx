@@ -10,42 +10,22 @@ export const Home = (): JSX.Element => {
     <>
       <Header />
       <Main>
-        <PrimaryContent>
-
-          <ContentBlock title='Últimos updates' size={{ height: '1500px' }} >
+        <DisplayContent>
+          <ContentBlock title='Últimas atualizações' size={{ height: 'fit-content' }} >
             <LastUpdates />
           </ContentBlock>
-
-        </PrimaryContent>
-
-        <SecundaryContent>
-          <ContentBlock title='Bloco 4' size={{ height: '1500px' }} >
-            oi
-          </ContentBlock>
-
-        </SecundaryContent>
-
+        </DisplayContent>
       </Main>
-
       <Footer />
     </>
   )
 }
 
-const PrimaryContent = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  width: 800px;
+const DisplayContent = styled.div`
+  display: grid;
+  grid-template-columns: 1200px;
   @media only screen and (max-width: 480px) {
-   width:100%;
+    grid-template-columns: auto;
   }
-
   
-`
-const SecundaryContent = styled.div`
-  width: 400px;
-  @media only screen and (max-width: 480px) {
-   width:100%;
-  }
 `
