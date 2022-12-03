@@ -26,6 +26,10 @@ export const createNewChapterRequest = async (data: NewChapter): Promise<any> =>
   return await api.post('create-chapter', data)
 }
 
+export const addNewPagesToChapterRequest = async (data: FormData): Promise<any> => {
+  return await api.post('create-page', data)
+}
+
 export const loadAllGenres = async (): Promise<any> => {
   return await api.get('get-all-genres')
 }
