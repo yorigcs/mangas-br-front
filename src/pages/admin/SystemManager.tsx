@@ -1,14 +1,16 @@
 import styled from 'styled-components'
+import { useState } from 'react'
 
 import { Footer } from '../../components/footer/Footer'
 import { Header } from '../../components/header/Header'
 import { Main } from '../../components/main/Main'
 import { ContentBlock } from '../../components/contents/ContentBlock'
 import { MenuItem } from '../../components/header/user/menu/MenuItem'
-import { useState } from 'react'
+
 import { CreateNewManga } from './rendersOptions/CreateNewManga'
 import { AddGenresToManga } from './rendersOptions/AddGenresToManga'
 import { CreateNewChapter } from './rendersOptions/CreateNewChapter'
+import { CreateNewPages } from './rendersOptions/CreateNewPages'
 
 export const SystemManger = (): JSX.Element => {
   const [openOption, setOpenOption] = useState<string | null>(null)
@@ -21,6 +23,8 @@ export const SystemManger = (): JSX.Element => {
         return <AddGenresToManga />
       case 'createChapter':
         return <CreateNewChapter />
+      case 'addPagesToChapter':
+        return <CreateNewPages />
       default:
         return <></>
     }
@@ -35,10 +39,9 @@ export const SystemManger = (): JSX.Element => {
               <MenuItem onClick={() => setOpenOption('createNewManga')}>Criar nova obra</MenuItem>
               <MenuItem onClick={() => setOpenOption('addGenresToManga')}>Add gêneros na obra</MenuItem>
               <MenuItem onClick={() => setOpenOption('createChapter')}>Criar capítulo</MenuItem>
+              <MenuItem onClick={() => setOpenOption('addPagesToChapter')}>Add paginas ao capítulo</MenuItem>
             </MenuList>
-
           </ContentBlock>
-
         </PrimaryContent>
 
         <SecundaryContent>

@@ -61,7 +61,8 @@ export const AddGenresToManga = (): JSX.Element => {
           reloadMangas().then(() => {}).catch(() => {})
         }, 2000)
       })
-      .catch(() => { resetRequestResponse() })
+      .catch(() => { })
+      .finally(() => { resetRequestResponse() })
   }
 
   return (
