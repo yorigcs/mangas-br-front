@@ -1,3 +1,4 @@
+import { Chapter } from './chapterModel'
 
 export interface newMangaData {
   name: string
@@ -27,27 +28,6 @@ interface GenreManga {
   genre: { name: string }
 }
 
-export interface MangaWithChapter {
-  id: string
-  cover_picture: string
-  name: string
-  description: string
-  author: string
-  posted_by: string
-  followed_by: number
-  status: string
-  rating: number | null
-  created_at: string
-  updated_at: string
-  GenreManga: GenreManga[]
+export interface MangaWithChapter extends Manga {
   Chapter: Chapter[]
-}
-
-export interface Chapter {
-  id: string
-  name: string
-  chapter_num: number
-  manga_id: string
-  created_at: string
-  updated_at: string
 }
