@@ -45,3 +45,7 @@ export const addGenresToManga = async (data: Genre): Promise<any> => {
 export const loadMangasWithChapter = async (): Promise<any> => {
   return await api.get('mangas-with-chapters')
 }
+
+export const findMangaWithChaptersByName = async (mangaName: string): Promise<any> => {
+  return await api.get(`manga-with-chapters/${mangaName}`)
+}
