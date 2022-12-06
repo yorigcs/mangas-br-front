@@ -8,7 +8,7 @@ const AdminRoutes = (): JSX.Element => (
   <Routes>
     <Route path='*' element={<Navigate to='/' replace />} />
     <Route path='/' element={<Home />}></Route>
-    <Route path='/mangas/:mangaId' element={<Manga />}></Route>
+    <Route path='/mangas/:mangaName' element={<Manga />}></Route>
     <Route path='/system-manager' element={<SystemManger />}></Route>
   </Routes>
 )
