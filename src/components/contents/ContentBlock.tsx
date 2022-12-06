@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 interface Props {
   children?: React.ReactNode
-  title: string
+  title?: string
   style?: React.CSSProperties
   size?: Size
   gap?: string
@@ -14,7 +14,7 @@ interface Size {
   height?: string
 }
 
-export const ContentBlock = ({ children, title, size, gap }: Props): JSX.Element => {
+export const ContentBlock = ({ children, title = '', size, gap }: Props): JSX.Element => {
   return (
       <ContentWrapper height={size?.height} width={size?.width}>
         <Title>
