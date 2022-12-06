@@ -1,19 +1,20 @@
 import styled from 'styled-components'
-import { Chapter } from '../../models/mangaModels'
+import { Chapter } from '../../models/chapterModel'
 
 import { ChapterRenderPreview } from './ChapterRenderPreview'
 
 interface Props {
   chapters: Chapter[]
+  mangaName: string
 }
-export const ChapterRenderList = ({ chapters }: Props): JSX.Element => {
+export const ChapterRenderList = ({ chapters, mangaName }: Props): JSX.Element => {
   return (
         <>
             {chapters.length !== 0
               ? <>
                     <Title>Capítulos disponíveis: {chapters.length}</Title>
                     <ListWrapper>
-                    {chapters.map(chapter => <ChapterRenderPreview key={chapter.id} {...chapter} />)}
+                    {chapters.map(chapter => <ChapterRenderPreview mangaName={mangaName} key={chapter.id} {...chapter} />)}
                     </ListWrapper>
                 </>
               : <Title>Ainda não há um capítulo disponível.</Title>}

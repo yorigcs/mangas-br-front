@@ -13,7 +13,7 @@ export const MangaWithChapterPreview = (props: MangaWithChapter): JSX.Element =>
               <Infos>
                   <Title onClick={() => navigate(`mangas/${mangaName}`)}>{props.name}</Title>
                   <ChaptersWrapper>
-                      {props.Chapter.map((chapter, i, chapters) => i > chapters.length - 3 ? <ChapterRenderPreview key={chapter.id} {...chapter} /> : null)}
+                      {props.Chapter.map((chapter, i, chapters) => i > chapters.length - 3 ? <ChapterRenderPreview key={chapter.id} mangaName={mangaName} {...chapter} /> : null)}
                   </ChaptersWrapper>
               </Infos>
 

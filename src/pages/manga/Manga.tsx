@@ -26,7 +26,7 @@ export const Manga = (): JSX.Element => {
       return (
         <ContentBlock gap='30px' title={manga.name} size={{ height: 'auto' }} >
           <MangaInfo {...manga} />
-          <ChapterRenderList chapters={manga.Chapter} />
+          <ChapterRenderList mangaName={mangaName} chapters={manga.Chapter} />
         </ContentBlock>
       )
     } else {

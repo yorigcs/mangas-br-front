@@ -1,12 +1,19 @@
+import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
-import { Chapter } from '../../models/mangaModels'
+import { Chapter } from '../../models/chapterModel'
 import { convertToDateMessage } from '../../utils/dateFormater'
 
-export const ChapterRenderPreview = (props: Chapter): JSX.Element => {
+interface Props extends Chapter {
+  mangaName: string
+}
+export const ChapterRenderPreview = ({ id, chapter_num, updated_at, mangaName, name }: Props): JSX.Element => {
+  const navigate = useNavigate()
+  const mangaNameChange = mangaName.toLowerCase().split(' ').join('-')
+  const chapterName = name.toLowerCase().split(' ').join('-')
   return (
-          <ChapterWrapper id={props.id}>
-              <Title>Cápitulo {props.chapter_num}</Title>
-              <Time> {convertToDateMessage(props.updated_at)}</Time>
+          <ChapterWrapper id={id} onClick={() => navigate(`/mangas/${mangaNameChange}/${chapterName}`)}>
+              <Title>Capítulo {chapter_num}</Title>
+              <Time> {convertToDateMessage(updated_at)}</Time>
           </ChapterWrapper>
   )
 }
@@ -19,7 +26,7 @@ const ChapterWrapper = styled.div`
     justify-content: space-between;
     align-items: center;
     border-radius: 8px;
-    border: 1px solid ${props => props.theme.colors.crystal};;
+    border: 1px solid ${props => props.theme.colors.crystal};
     background-color:${props => props.theme.colors.spaceCadet};
     width:100%;
     &:hover{
