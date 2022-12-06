@@ -6,11 +6,12 @@ import { useNavigate } from 'react-router-dom'
 
 export const MangaWithChapterPreview = (props: MangaWithChapter): JSX.Element => {
   const navigate = useNavigate()
+  const mangaName = props.name.toLowerCase().split(' ').join('-')
   return (
           <MangaWithChapterContentWrapper>
-              <Image id={props.id} onClick={e => navigate(`mangas/${e.currentTarget.id}`, { state: { ...props } })} src={props.cover_picture} alt={props.name} />
+              <Image id={props.id} onClick={() => navigate(`mangas/${mangaName}`)} src={props.cover_picture} alt={props.name} />
               <Infos>
-                  <Title>{props.name}</Title>
+                  <Title onClick={() => navigate(`mangas/${mangaName}`)}>{props.name}</Title>
                   <ChaptersWrapper>
                       {props.Chapter.map((chapter, i, chapters) => i > chapters.length - 3 ? <ChapterRenderPreview key={chapter.id} {...chapter} /> : null)}
                   </ChaptersWrapper>
@@ -44,6 +45,7 @@ const Image = styled.img`
 `
 
 const Title = styled.h2`
+  cursor: pointer;
   width:100%;
   color: ${props => props.theme.colors.crystal}
 `
