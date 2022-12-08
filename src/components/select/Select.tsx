@@ -63,6 +63,7 @@ const SelectionBox = styled.div`
     padding-left: 8px;
 `
 const Container = styled.div`
+    width: 100%;
     position: relative;
     
 `
