@@ -11,7 +11,7 @@ import loadingAnimation from '../../assets/lottieAnimations/loadingLottie.json'
 interface Props {
   message: string
   onClick?: React.MouseEventHandler<HTMLButtonElement>
-  status: Status
+  status?: Status
   errMsg?: string | null
 }
 
