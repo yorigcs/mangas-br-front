@@ -9,7 +9,7 @@ const UserRoutes = (): JSX.Element => (
     <Route path='*' element={<Navigate to='/' replace />} />
     <Route path='/' element={<Home />}></Route>
     <Route path='/mangas/:mangaName' element={<Manga />} />
-    <Route path='/mangas/:mangaName/:chapterId' element={<Chapter />}/>
+    <Route path='/mangas/:mangaName/:chapterName' element={<Chapter />}/>
   </Routes>
 )
 export default UserRoutes
