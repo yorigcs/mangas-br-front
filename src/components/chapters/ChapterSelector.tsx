@@ -2,26 +2,29 @@ import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import { MdViewList } from 'react-icons/md'
 import { useChapter } from '../../hooks/useChapter'
-import { Chapter } from '../../models/chapterModel'
 
-export const ChapterSelector = ({ chapters }: { chapters: Chapter[] }): JSX.Element => {
-  const { mangaName, previousChapterName, nextChapterName } = useChapter()
+export const ChapterSelector = (): JSX.Element => {
+  const { mangaName, previousChapterName, nextChapterName, setChapterParams } = useChapter()
   const navigate = useNavigate()
 
+  const handleOnClick = (chapterNameParam: string): void => {
+    setChapterParams(params => ({ ...params, chapterNameParam }))
+    navigate(`/mangas/${mangaName}/${chapterNameParam}`)
+  }
   const handleRenderButtons = (): JSX.Element => {
     if (previousChapterName && nextChapterName) {
       return (
         <>
-          <Button onClick={() => navigate(`/mangas/${mangaName}/${previousChapterName}`)}>Anterior</Button>
+          <Button onClick={() => handleOnClick(previousChapterName)}>Anterior</Button>
           <Back onClick={() => navigate(`/mangas/${mangaName}`)}>
             <MdViewList size={28} />
           </Back>
-          <Button onClick={() => navigate(`/mangas/${mangaName}/${nextChapterName}`)}>Próximo</Button>
+          <Button onClick={() => handleOnClick(nextChapterName)}>Próximo</Button>
         </>)
     } else if (previousChapterName && !nextChapterName) {
       return (
         <>
-          <Button onClick={() => navigate(`/mangas/${mangaName}/${previousChapterName}`)}>Anterior</Button>
+          <Button onClick={() => handleOnClick(previousChapterName)}>Anterior</Button>
           <Back onClick={() => navigate(`/mangas/${mangaName}`)}>
             <MdViewList size={28} />
           </Back>
@@ -34,7 +37,7 @@ export const ChapterSelector = ({ chapters }: { chapters: Chapter[] }): JSX.Elem
           <Back onClick={() => navigate(`/mangas/${mangaName}`)}>
             <MdViewList size={28} />
           </Back>
-          <Button onClick={() => navigate(`/mangas/${mangaName}/${nextChapterName}`)}>Próximo</Button>
+          <Button onClick={() => handleOnClick(nextChapterName)}>Próximo</Button>
         </>)
     } else {
       return (<></>)
