@@ -49,3 +49,7 @@ export const loadMangasWithChapter = async (): Promise<any> => {
 export const findMangaWithChaptersByName = async (mangaName: string): Promise<any> => {
   return await api.get(`manga-with-chapters/${mangaName}`)
 }
+
+export const findChapterPagesByChapterId = async (chapterId: string): Promise<any> => {
+  return await api.get(`page-by-chapterId/${chapterId}`)
+}
