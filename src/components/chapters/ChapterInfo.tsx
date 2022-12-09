@@ -1,19 +1,20 @@
 import React from 'react'
 import styled from 'styled-components'
 import { useChapter } from '../../hooks/useChapter'
+import { ChapterPages } from './ChapterPages'
 
 import { ChapterSelector } from './ChapterSelector'
 
 export const ChapterInfo = (): JSX.Element => {
   const { manga, actualChapterName } = useChapter()
   const mangaName = manga?.name
-  const chapters = manga?.Chapter
-  if (!chapters) return <></>
+
   return (
     <ChapterInfoWrapper>
       {mangaName}
       {actualChapterName}
-      <ChapterSelector chapters={chapters} />
+      <ChapterSelector />
+      <ChapterPages />
     </ChapterInfoWrapper>
 
   )
@@ -21,6 +22,7 @@ export const ChapterInfo = (): JSX.Element => {
 
 const ChapterInfoWrapper = styled.div`
   display: flex;
+  gap: 20px;
   flex-direction: column;
   align-items: center
   
