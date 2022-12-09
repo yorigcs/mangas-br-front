@@ -1,22 +1,28 @@
 import styled from 'styled-components'
-
+import { useParams } from 'react-router-dom'
 import { Footer } from '../../components/footer/Footer'
 import { Header } from '../../components/header/Header'
 import { Main } from '../../components/main/Main'
 import { ChapterInfo } from '../../components/chapters/ChapterInfo'
-
-import { ChapterProvider } from '../../contexts/ChapterProvider'
+import { useChapter } from '../../hooks/useChapter'
+import { useEffect } from 'react'
 
 export const Chapter = (): JSX.Element => {
+  const mangaNameParam = useParams().mangaName
+  const chapterNameParam = useParams().chapterName
+  const { setChapterParams } = useChapter()
+  useEffect(() => {
+    if (mangaNameParam && chapterNameParam) {
+      setChapterParams({ chapterNameParam, mangaNameParam })
+    }
+  }, [])
   return (
     <>
       <Header />
       <Main>
-        <ChapterProvider>
           <PrimaryContent>
             <ChapterInfo />
           </PrimaryContent>
-        </ChapterProvider>
       </Main>
       <Footer />
     </>
