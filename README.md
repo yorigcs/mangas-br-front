@@ -37,7 +37,6 @@ manga-brasil é um projeto em andamento para testar possíveis para hospedagem e
 8. Adição de páginas
 <img src="https://imgur.com/OzSxNyA.png" alt="Pagina de adição de páginas">
 
-(manga-brasil-back-end)
 ## Como rodar o projeto localmente
 
 1. clone este repositório
