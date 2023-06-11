@@ -1,6 +1,6 @@
-# manga-brasil-front-end
+# mangas-br-front
 
-Front-end para a <a href= "https://github.com/yorigcs/manga-brasil-back-end">API manga-brasil</a>.
+Front-end para a <a href= "https://github.com/yorigcs/mangas-br-back">API mangas-brl</a>.
 
 Feito em React utilizando Vite como bundler.
 
