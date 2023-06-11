@@ -1,6 +1,6 @@
 # mangas-br-front
 
-Front-end para a <a href= "https://github.com/yorigcs/mangas-br-back">API mangas-brl</a>.
+Front-end para a <a href= "https://github.com/yorigcs/mangas-br-back">API mangas-br</a>.
 
 Feito em React utilizando Vite como bundler.
 
